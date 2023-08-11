@@ -1,4 +1,4 @@
-# indymap2023
+# IndyMap
 
 ## Project setup
 
