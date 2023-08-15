@@ -8,6 +8,7 @@
         />
       </div>
       <input
+        class="search__input"
         type="text"
         v-model="filterValue"
         placeholder="Search for Marker"
@@ -20,11 +21,11 @@
       <div class="note__popup">
         <img
           class="note__popup__image"
-          :src="notePopupContent.image"
+          src="https://picsum.photos/200/300"
           :alt="notePopupContent.description"
         />
         <div class="note__popup__content">
-          <h2>{{ notePopupContent.heading }}</h2>
+          <h2>{{ notePopupContent.header }}</h2>
           <p class="note__popup__text">
             {{ notePopupContent.description.substring(0, 50) }}
           </p>
@@ -45,8 +46,23 @@
 <script>
 import "../../node_modules/leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useDataStore } from "@/stores/useDataStoreDominic";
 
 export default {
+  setup() {
+    const dataStore = useDataStore();
+
+    let mapData = dataStore.stateData.maps.filter(
+      (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
+    );
+
+    /*     Komponente braucht die konkrete MapID von der Startseite zum rendern der richtigen Map*/
+    const notes = mapData[0].pins;
+
+    return {
+      notes,
+    };
+  },
   name: "MapComponent",
   data() {
     return {
@@ -56,36 +72,17 @@ export default {
       filteredNotes: [],
       filterValue: null,
       markers: [],
-      notes: [
-        {
-          id: 1,
-          heading: "Coole Weinbar",
-          description:
-            "Hier kann man gut und günstig Wein trinken. Musik nicht zu laut. Gemütliche Stühle.",
-          location: { lat: 49.99041501874332, lng: 6.905250549316407 },
-          image:
-            "https://images.pexels.com/photos/1666025/pexels-photo-1666025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        },
-        {
-          id: 2,
-          heading: "Lorem Ipsum",
-          description:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.",
-          location: { lat: 49.978935813535564, lng: 6.890487670898438 },
-          image:
-            "https://images.pexels.com/photos/17788275/pexels-photo-17788275/free-photo-of-city-street-building-house.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        },
-      ],
     };
   },
   methods: {
+    /* Fetches the user's geolocation from the browers if they grant permission*/
     fetchLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             this.currentLocation = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
             };
           },
           (error) => {
@@ -96,6 +93,8 @@ export default {
         console.error("Geolocation is not supported by this browser.");
       }
     },
+
+    /* Creates a leaflet map instance and renders it in div#map */
     renderMap() {
       this.map = L.map("map", { zoomControl: false });
 
@@ -108,8 +107,11 @@ export default {
           attribution: "© OpenStreetMap",
         }
       ).addTo(this.map);
+
+      this.map.on("contextmenu", (e) => this.createNewMarker(e));
     },
 
+    /* Goes through the notes array and adds a marker for each pin note*/
     addMarker() {
       this.markers.forEach((marker) => {
         this.map.removeLayer(marker);
@@ -121,10 +123,13 @@ export default {
       });
 
       for (let note of this.filteredNotes) {
-        let marker = new L.marker([note.location.lat, note.location.lng], {
-          icon: markerIcon,
-          id: note.id,
-        });
+        let marker = new L.marker(
+          [note.geoLocation.lat, note.geoLocation.lng],
+          {
+            icon: markerIcon,
+            id: note.id,
+          }
+        );
         marker.on("click", (e) => this.showNotePopup(e));
         this.markers.push(marker);
       }
@@ -134,6 +139,7 @@ export default {
       });
     },
 
+    /* Opens a popup of the pin note with a littel preview of the note contents*/
     showNotePopup(e) {
       e.originalEvent.preventDefault();
       for (let i = 0; i < this.notes.length; i++) {
@@ -144,10 +150,12 @@ export default {
       }
     },
 
+    /* Closes the popup again*/
     closeNotePopup() {
       this.notePopupContent = null;
     },
 
+    /* Filters all the pin notes based on the text provided in the input field*/
     filterNotes() {
       this.filteredNotes = [];
       this.notes.forEach((note) => {
@@ -157,13 +165,19 @@ export default {
           note.description
             .toLowerCase()
             .includes(this.filterValue.toLowerCase()) |
-          note.heading.toLowerCase().includes(this.filterValue.toLowerCase())
+          note.header.toLowerCase().includes(this.filterValue.toLowerCase())
         ) {
           this.filteredNotes.push(note);
         } else {
           return;
         }
       });
+    },
+
+    /* Gets the geolocation information from a user's click and forwards user to the "create new pin" page*/
+    createNewMarker(e) {
+      let clickLocation = e.latlng;
+      console.log(clickLocation);
     },
   },
   created() {
@@ -176,7 +190,7 @@ export default {
   },
   watch: {
     currentLocation(newLocation) {
-      this.map.setView([newLocation.latitude, newLocation.longitude], 13);
+      this.map.setView([newLocation.lat, newLocation.lng], 13);
     },
     filterValue() {
       this.filterNotes();
@@ -187,6 +201,11 @@ export default {
 </script>
 
 <style scoped>
+h2,
+p {
+  margin: 0;
+}
+
 .search__wrapper {
   position: fixed;
   display: flex;
@@ -222,15 +241,12 @@ export default {
   height: 32px;
 }
 
-input {
+.search__input {
   height: 100%;
   width: 100%;
+  border: transparent;
 }
 
-.search {
-  border: 1px solid black;
-  margin-left: 1rem;
-}
 .wrapper {
   height: 100%;
 }
@@ -285,6 +301,7 @@ input {
 
 .details {
   border-radius: 10px;
+  border: none;
   background-color: #23a7b9;
   color: snow;
 
@@ -296,6 +313,11 @@ input {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+
+  padding: 0;
+
+  background-color: transparent;
+  border: none;
 }
 
 .note__popup__close {

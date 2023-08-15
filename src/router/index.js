@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import MapView from "../views/MapView.vue";
 import MarkerNoteRead from "@/components/MarkerNoteRead.vue";
 
 const routes = [
@@ -21,6 +22,11 @@ const routes = [
     path: "/new-marker",
     name: "new marker",
     component: MarkerNoteRead,
+  },
+  {
+    path: "/map",
+    name: "map",
+    component: MapView,
   },
 ];
 
