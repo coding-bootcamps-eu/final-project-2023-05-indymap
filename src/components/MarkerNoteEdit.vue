@@ -5,6 +5,7 @@
       <input
         type="text"
         v-model.trim="dataStore.stateData.dummyMarker1.newHeadline"
+        placeholder="Your Marker"
       />
     </article>
     <article class="marker-edit-text-input-container">
@@ -12,6 +13,7 @@
       <input
         type="text"
         v-model.trim="dataStore.stateData.dummyMarker1.newDescription"
+        placeholder="What did you mark?"
       />
     </article>
     <article class="marker-edit-image-input-container">
