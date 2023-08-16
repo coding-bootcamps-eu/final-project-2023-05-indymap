@@ -71,7 +71,7 @@ export default {
   computed: {},
 };
 </script>
-<style>
+<style scoped>
 * {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
