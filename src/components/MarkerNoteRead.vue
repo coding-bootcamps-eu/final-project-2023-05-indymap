@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import { useDataStore } from "@/stores/useDataStore";
+import { useDataStoreTest } from "@/stores/useDataStore";
 
 export default {
   name: "MarkerNoteRead",
   setup() {
-    const dataStore = useDataStore();
+    const dataStore = useDataStoreTest();
     const mapData = dataStore.stateData.maps.filter(
       (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
     );
