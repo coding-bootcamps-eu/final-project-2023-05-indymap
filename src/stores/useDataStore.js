@@ -3,13 +3,16 @@ import { defineStore } from "pinia";
 export const useDataStore = defineStore("state", {
   state() {
     return {
-      stateData: {
-        dummyMarker1: {
-          headline: "This is a marker",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exer...",
-        },
-      },
+      stateData: {},
     };
+  },
+  actions: {
+    fetchApiData() {
+      fetch(
+        "http://localhost:3000/users/4a3eac09-f652-4d5e-8f4d-691502a71ef6?_embed=maps"
+      )
+        .then((response) => response.json())
+        .then((data) => (this.stateData = data));
+    },
   },
 });

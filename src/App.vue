@@ -6,3 +6,15 @@
   </nav>
   <router-view />
 </template>
+
+<script>
+import { useDataStore } from "@/stores/useDataStore";
+
+export default {
+  setup() {
+    const dataStore = useDataStore();
+    dataStore.fetchApiData();
+    console.log(dataStore);
+  },
+};
+</script>
