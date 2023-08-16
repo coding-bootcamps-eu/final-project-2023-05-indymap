@@ -1,23 +1,26 @@
 <template>
   <section class="marker-edit-container">
     <article class="marker-edit-headline-input-container">
-      <p>Please give your Marker a name</p>
+      <label for="marker-name">Please give your Marker a name</label>
       <input
         type="text"
-        v-model.trim="dataStore.stateData.dummyMarker1.newHeadline"
-        placeholder="Your Marker"
+        v-model.trim="placeholderTitle"
+        placeholder=" Your Marker"
+        id="marker-name"
       />
     </article>
     <article class="marker-edit-text-input-container">
-      <p>Please decribe your marker</p>
-      <input
-        type="text"
-        v-model.trim="dataStore.stateData.dummyMarker1.newDescription"
-        placeholder="What did you mark?"
-      />
+      <label for="marker-description">Please decribe your marker</label>
+      <textarea
+        name="marker-description-input"
+        v-model.trim="placeholderDescription"
+        placeholder=" What did you mark?"
+        id="marker-description"
+        cols="10"
+        rows="5"
+      ></textarea>
     </article>
     <article class="marker-edit-image-input-container">
-      <p>Upload an image</p>
       <button>Upload Image</button>
     </article>
     <router-link class="router-link router-link-save-marker" to="/about">
@@ -31,6 +34,12 @@ import { useDataStore } from "@/stores/useDataStore";
 
 export default {
   name: "MarkerNoteEdit",
+  data() {
+    return {
+      placeholderTitle: "a title",
+      placeholderDescription: "a description",
+    };
+  },
   setup() {
     const dataStore = useDataStore();
     return {
@@ -90,6 +99,10 @@ export default {
   gap: 1.5rem;
   flex-direction: column;
   align-items: center;
+}
+#marker-description {
+  height: 5rem;
+  width: 15rem;
 }
 
 .router-link,
