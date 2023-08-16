@@ -12,15 +12,12 @@
 </template>
 
 <script>
-import { useDataStoreTest } from "@/stores/useDataStore";
-import { useDataStore } from "@/stores/useDataStoreDominic";
+import { useDataStore } from "@/stores/useDataStore";
 
 export default {
   setup() {
-    const dataStoreTest = useDataStoreTest();
-    dataStoreTest.fetchApiData();
     const dataStore = useDataStore();
-    dataStore.fetchApiData();
+    dataStore.fetchApiData("4a3eac09-f652-4d5e-8f4d-691502a71ef6");
   },
 };
 </script>

@@ -46,7 +46,7 @@
 <script>
 import "../../node_modules/leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useDataStore } from "@/stores/useDataStoreDominic";
+import { useDataStore } from "@/stores/useDataStore";
 
 export default {
   setup() {
