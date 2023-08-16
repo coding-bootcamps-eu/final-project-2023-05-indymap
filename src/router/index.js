@@ -27,8 +27,8 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
-    path: "/new-marker",
-    name: "new marker",
+    path: "/view-marker",
+    name: "view marker",
     component: MarkerNoteRead,
   },
   {
