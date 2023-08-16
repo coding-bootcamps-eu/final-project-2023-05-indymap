@@ -1,30 +1,28 @@
 <template>
-  <body>
-    <main>
-      <div class="new-user-introduction">
-        <p>
-          Welcome to Indymap new user. Please tell us your name so that we know
-          who you are in the future.
-        </p>
-        <form>
-          <label for="username">Username</label
-          ><input type="text" name="username" />
-          <button>Submit</button>
-        </form>
-      </div>
-      <div>
-        <h1>Welcome back user, select your map to get started:</h1>
-        <div class="flavor-text-map">
-          <img src="https://picsum.photos/seed/picsum/100/100" alt="map" />
-          <div class="heading-and-description">
-            <h2>Just a map</h2>
-            <p>Just a description</p>
-            <button class="delete-button">Delete map</button>
-          </div>
+  <main>
+    <div class="new-user-introduction">
+      <p>
+        Welcome to Indymap new user. Please tell us your name so that we know
+        who you are in the future.
+      </p>
+      <form>
+        <label for="username">Username</label
+        ><input type="text" name="username" />
+        <button>Submit</button>
+      </form>
+    </div>
+    <div>
+      <h1>Welcome back user, select your map to get started:</h1>
+      <div class="flavor-text-map">
+        <img src="https://picsum.photos/seed/picsum/100/100" alt="map" />
+        <div class="heading-and-description">
+          <h2>Just a map</h2>
+          <p>Just a description</p>
+          <button class="delete-button">Delete map</button>
         </div>
       </div>
-    </main>
-  </body>
+    </div>
+  </main>
 </template>
 <style scoped>
 *,
@@ -32,8 +30,7 @@
 :after {
   box-sizing: border-box;
 }
-html,
-body {
+html {
   height: 100%;
 }
 main {
