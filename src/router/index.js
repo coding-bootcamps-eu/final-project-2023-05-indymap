@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "../views/LandingView.vue";
 import HomeView from "../views/HomeView.vue";
+import MapView from "../views/MapView.vue";
+import MarkerNoteRead from "@/components/MarkerNoteRead.vue";
+import CreateNewMap from "@/views/CreateNewMapView.vue";
 
 const routes = [
   {
@@ -21,6 +24,21 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/new-marker",
+    name: "new marker",
+    component: MarkerNoteRead,
+  },
+  {
+    path: "/map",
+    name: "map",
+    component: MapView,
+  },
+  {
+    path: "/new-map",
+    name: "new map",
+    component: CreateNewMap,
   },
 ];
 
