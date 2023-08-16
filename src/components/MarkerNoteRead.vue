@@ -1,5 +1,12 @@
 <template>
   <section class="marker-container">
+    <router-link class="router-link router-link-map-view" to="/about">
+      <img
+        class="icon-left"
+        :src="require('@/assets/icons/arrow-left-circle.svg')"
+        alt="arrow pointing left"
+    /></router-link>
+
     <h2 class="marker-headline">
       {{ pinData[0].header }}
     </h2>
@@ -77,6 +84,13 @@ export default {
   gap: 1.5rem;
   flex-direction: column;
   align-items: center;
+}
+.router-link-map-view {
+  position: absolute;
+  align-self: flex-start;
+}
+.icon-left {
+  width: 1.5rem;
 }
 .marker-text {
   text-align: justify;

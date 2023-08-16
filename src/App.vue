@@ -2,7 +2,7 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
-    <RouterLink to="/new-marker">New Marker</RouterLink>
+    <RouterLink to="/view-marker">View Marker</RouterLink>
   </nav>
   <router-view />
 </template>
