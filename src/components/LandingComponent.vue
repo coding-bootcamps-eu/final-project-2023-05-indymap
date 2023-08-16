@@ -8,7 +8,9 @@
       <form>
         <label for="username">Username</label
         ><input type="text" name="username" />
-        <button>Submit</button>
+        <button @click.prevent="dataStore.createNewUser('Testuser123')">
+          Submit
+        </button>
       </form>
     </div>
     <div>
@@ -24,6 +26,22 @@
     </div>
   </main>
 </template>
+
+<script>
+import { useDataStore } from "@/stores/useDataStore";
+
+export default {
+  setup() {
+    const dataStore = useDataStore();
+
+    console.log(dataStore);
+    return {
+      dataStore,
+    };
+  },
+};
+</script>
+
 <style scoped>
 *,
 :before,
