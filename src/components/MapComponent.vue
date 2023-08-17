@@ -119,13 +119,23 @@ export default {
 
       this.map.setView([51.3127114, 9.4797461], 10);
 
-      L.tileLayer(
-        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png",
-        {
-          maxZoom: 19,
-          attribution: "© OpenStreetMap",
-        }
-      ).addTo(this.map);
+      if (localStorage.getItem("darkMode") === "enabled") {
+        L.tileLayer(
+          "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/dark_all/{z}/{x}/{y}.png",
+          {
+            maxZoom: 19,
+            attribution: "© OpenStreetMap",
+          }
+        ).addTo(this.map);
+      } else {
+        L.tileLayer(
+          "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png",
+          {
+            maxZoom: 19,
+            attribution: "© OpenStreetMap",
+          }
+        ).addTo(this.map);
+      }
 
       this.map.on("contextmenu", this.showContextMenu);
     },
@@ -307,6 +317,7 @@ p {
   height: 100%;
   width: 100%;
   border: transparent;
+  background-color: snow;
 }
 
 .wrapper {
