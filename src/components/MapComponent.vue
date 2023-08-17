@@ -1,21 +1,21 @@
 <template>
-  <div class="search__wrapper">
-    <div class="search__input__wrapper">
-      <div class="search__icon">
-        <img
-          :src="require('@/assets/icons/search-icon.svg')"
-          alt="searchIcon"
+  <div class="wrapper">
+    <div class="search__wrapper">
+      <div class="search__input__wrapper">
+        <div class="search__icon">
+          <img
+            :src="require('@/assets/icons/search-icon.svg')"
+            alt="searchIcon"
+          />
+        </div>
+        <input
+          class="search__input"
+          type="text"
+          v-model="filterValue"
+          placeholder="Search for Marker"
         />
       </div>
-      <input
-        class="search__input"
-        type="text"
-        v-model="filterValue"
-        placeholder="Search for Marker"
-      />
     </div>
-  </div>
-  <div class="wrapper">
     <div id="map" @click="closeNotePopup"></div>
     <div v-if="notePopupContent" class="note__popup__container">
       <div class="note__popup">
@@ -39,6 +39,20 @@
           />
         </button>
       </div>
+    </div>
+    <div
+      v-if="contextMenuVisible"
+      class="context__menu"
+      :style="{
+        top: contextMenuPosition.y + 'px',
+        left: contextMenuPosition.x + 'px',
+      }"
+    >
+      <p class="add__marker__location">
+        {{ contextMenuPosition.lat.toFixed(4) }},
+        {{ contextMenuPosition.lng.toFixed(4) }}
+      </p>
+      <button class="add__marker">Add Marker</button>
     </div>
   </div>
 </template>
@@ -72,6 +86,8 @@ export default {
       filteredNotes: [],
       filterValue: null,
       markers: [],
+      contextMenuVisible: false,
+      contextMenuPosition: { x: 0, y: 0, lat: 0, lng: 0 },
     };
   },
   methods: {
@@ -108,7 +124,7 @@ export default {
         }
       ).addTo(this.map);
 
-      this.map.on("contextmenu", (e) => this.createNewMarker(e));
+      this.map.on("contextmenu", this.showContextMenu);
     },
 
     /* Goes through the notes array and adds a marker for each pin note*/
@@ -174,6 +190,22 @@ export default {
       });
     },
 
+    showContextMenu(e) {
+      this.contextMenuPosition = {
+        x: e.originalEvent.clientX,
+        y: e.originalEvent.clientY,
+        ...e.latlng,
+      };
+      this.contextMenuVisible = true;
+
+      // Close the context menu when clicked outside
+      document.addEventListener("click", this.closeContextMenu, { once: true });
+    },
+
+    closeContextMenu() {
+      this.contextMenuVisible = false;
+    },
+
     /* Gets the geolocation information from a user's click and forwards user to the "create new pin" page*/
     createNewMarker(e) {
       let clickLocation = e.latlng;
@@ -206,15 +238,40 @@ p {
   margin: 0;
 }
 
+.context__menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  z-index: 5000;
+}
+
+.add__marker {
+  width: 100%;
+  padding: 10px;
+
+  border: none;
+  background-color: transparent;
+
+  text-align: start;
+}
+
+.add__marker:hover {
+  background-color: hsla(0, 0%, 50%, 0.15);
+}
+
+.add__marker__location {
+  padding: 10px;
+}
+
 .search__wrapper {
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
 
-  top: 0;
+  top: 1rem;
   width: 100%;
-
-  padding-top: 2rem;
 
   z-index: 4000;
 }
@@ -248,6 +305,7 @@ p {
 }
 
 .wrapper {
+  position: relative;
   height: 100%;
 }
 
