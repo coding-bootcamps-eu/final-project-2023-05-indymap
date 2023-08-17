@@ -66,15 +66,8 @@ export default {
   setup() {
     const dataStore = useDataStore();
 
-    let mapData = dataStore.stateData.maps.filter(
-      (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
-    );
-
-    /*     Komponente braucht die konkrete MapID von der Startseite zum rendern der richtigen Map*/
-    const notes = mapData[0].pins;
-
     return {
-      notes,
+      dataStore,
     };
   },
   name: "MapComponent",
@@ -89,6 +82,14 @@ export default {
       contextMenuVisible: false,
       contextMenuPosition: { x: 0, y: 0, lat: 0, lng: 0 },
     };
+  },
+  computed: {
+    notes() {
+      let mapData = this.dataStore.stateData.maps.filter(
+        (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
+      );
+      return mapData[0].pins;
+    },
   },
   methods: {
     /* Fetches the user's geolocation from the browers if they grant permission*/
@@ -117,7 +118,7 @@ export default {
       this.map.setView([51.3127114, 9.4797461], 10);
 
       L.tileLayer(
-        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png",
         {
           maxZoom: 19,
           attribution: "© OpenStreetMap",
@@ -286,7 +287,7 @@ p {
   height: 60px;
 
   background-color: snow;
-  border: 2px solid black;
+  border: 1px solid grey;
   border-radius: 50px;
 
   padding: 1rem;
