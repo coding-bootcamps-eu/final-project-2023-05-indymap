@@ -5,6 +5,7 @@ export const useDataStore = defineStore("state", {
     return {
       stateData: {},
       currentMap: "",
+      newMarkerLocation: {},
     };
   },
   actions: {
@@ -15,6 +16,7 @@ export const useDataStore = defineStore("state", {
         .then((data) => (this.stateData = data));
     },
 
+    /* Sends userName to API and stores UserID in localStorage */
     createNewUser(userName) {
       fetch("http://localhost:3000/users", {
         method: "POST",
@@ -32,6 +34,7 @@ export const useDataStore = defineStore("state", {
         );
     },
 
+    /* Sends MapData to API */
     createNewMap(mapTitle, mapDescripion, userID) {
       fetch("http://localhost:3000/maps", {
         method: "POST",
@@ -48,6 +51,7 @@ export const useDataStore = defineStore("state", {
         .then((data) => (this.currentMap = data.id));
     },
 
+    /* Deletes Map with specific ID from API */
     deleteMap(mapID) {
       fetch(`http://localhost:3000/maps/${mapID}`, {
         method: "DELETE",
