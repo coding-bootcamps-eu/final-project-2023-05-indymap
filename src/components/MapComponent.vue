@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="search__wrapper">
-      <div class="search__input__wrapper">
+      <div class="search__input__wrapper" v-if="notes">
         <div class="search__icon">
           <img
             :src="require('@/assets/icons/search-icon.svg')"
@@ -14,6 +14,9 @@
           v-model="filterValue"
           placeholder="Search for Marker"
         />
+      </div>
+      <div class="search__input__wrapper" v-else>
+        <p>Loading Data...</p>
       </div>
     </div>
     <div id="map" @click="closeNotePopup"></div>
@@ -65,6 +68,7 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
+    dataStore.fetchMapPins("7220e93a-804f-4c9e-880a-8e53e429c1b3");
 
     return {
       dataStore,
@@ -85,10 +89,8 @@ export default {
   },
   computed: {
     notes() {
-      let mapData = this.dataStore.stateData.maps.filter(
-        (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
-      );
-      return mapData[0].pins;
+      let pinData = this.dataStore.statePins.pins;
+      return pinData;
     },
   },
   methods: {
@@ -162,6 +164,7 @@ export default {
       for (let i = 0; i < this.notes.length; i++) {
         if (this.notes[i].id === e.target.options.id) {
           this.notePopupContent = this.notes[i];
+          this.dataStore.currentPin = this.notes[i].id;
           break;
         }
       }
@@ -170,6 +173,7 @@ export default {
     /* Closes the popup again*/
     closeNotePopup() {
       this.notePopupContent = null;
+      this.dataStore.currentPin = "";
     },
 
     /* Filters all the pin notes based on the text provided in the input field*/
@@ -198,6 +202,7 @@ export default {
         ...e.latlng,
       };
       this.contextMenuVisible = true;
+      this.dataStore.newPinLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
 
       // Close the context menu when clicked outside
       document.addEventListener("click", this.closeContextMenu, { once: true });
@@ -205,25 +210,22 @@ export default {
 
     closeContextMenu() {
       this.contextMenuVisible = false;
-    },
-
-    /* Gets the geolocation information from a user's click and forwards user to the "create new pin" page*/
-    createNewMarker(e) {
-      let clickLocation = e.latlng;
-      console.log(clickLocation);
+      this.dataStore.newPinLocation = {};
     },
   },
   created() {
     this.fetchLocation();
-    this.filterNotes();
   },
   mounted() {
     this.renderMap();
-    this.addMarker();
   },
   watch: {
     currentLocation(newLocation) {
       this.map.setView([newLocation.lat, newLocation.lng], 13);
+    },
+    notes() {
+      this.filterNotes();
+      this.addMarker();
     },
     filterValue() {
       this.filterNotes();
@@ -256,6 +258,8 @@ p {
   background-color: transparent;
 
   text-align: start;
+
+  cursor: pointer;
 }
 
 .add__marker:hover {

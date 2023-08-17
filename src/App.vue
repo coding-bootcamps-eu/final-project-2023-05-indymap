@@ -17,7 +17,7 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
-    dataStore.fetchApiData("4a3eac09-f652-4d5e-8f4d-691502a71ef6");
+    dataStore.fetchUserMaps("4a3eac09-f652-4d5e-8f4d-691502a71ef6");
   },
 };
 </script>
