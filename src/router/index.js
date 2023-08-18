@@ -27,8 +27,8 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
-    path: "/view-marker",
-    name: "view marker",
+    path: "/view-pin",
+    name: "view pin",
     component: MarkerNoteRead,
   },
   {
@@ -42,8 +42,8 @@ const routes = [
     component: CreateNewMap,
   },
   {
-    path: "/edit-marker",
-    name: "edit marker",
+    path: "/edit-pin",
+    name: "edit pin",
     component: MarkerNoteEdit,
   },
 ];

@@ -7,7 +7,13 @@ export const useDataStore = defineStore("state", {
       statePins: {},
       currentMap: "",
       currentPin: "",
+      currentPinId: "60ab73fa-1737-4e65-9c0d-dc9c5fc6b3c1",
       newPinLocation: {},
+      newPin: false,
+      newPinGeoLocation: {
+        lat: 22.3,
+        lang: 25.5,
+      },
     };
   },
   actions: {
@@ -41,7 +47,7 @@ export const useDataStore = defineStore("state", {
         );
     },
 
-    createNewMap(mapTitle, mapDescripion, userID) {
+    createNewMap(mapTitle, mapDescription, userID) {
       fetch("http://localhost:3000/maps", {
         method: "POST",
         headers: {
@@ -50,7 +56,7 @@ export const useDataStore = defineStore("state", {
         body: JSON.stringify({
           userId: userID,
           mapTitle: mapTitle,
-          mapDescripion: mapDescripion,
+          mapDescription: mapDescription,
         }),
       })
         .then((response) => response.json())
@@ -63,7 +69,7 @@ export const useDataStore = defineStore("state", {
       }).then((response) => response.json());
     },
 
-    createNewPin(header, descripion, geoLocation, mapId) {
+    createNewPin(header, description, geoLocation, mapId) {
       fetch("http://localhost:3000/pins", {
         method: "POST",
         headers: {
@@ -72,16 +78,16 @@ export const useDataStore = defineStore("state", {
         body: JSON.stringify({
           mapId: mapId,
           header: header,
-          descripion: descripion,
+          description: description,
           geoLocation: geoLocation,
           createdAt: new Date(),
         }),
       })
         .then((response) => response.json())
-        .then((data) => (this.currentMap = data.id));
+        .then((data) => (this.currentPinId = data.id));
     },
 
-    editPin(pinId, header, descripion, geoLocation, mapId) {
+    editPin(pinId, header, description, geoLocation, mapId) {
       fetch(`http://localhost:3000/pins/${pinId}`, {
         method: "PATCH",
         headers: {
@@ -90,7 +96,7 @@ export const useDataStore = defineStore("state", {
         body: JSON.stringify({
           mapId: mapId,
           header: header,
-          descripion: descripion,
+          description: description,
           geoLocation: geoLocation,
         }),
       })
