@@ -32,8 +32,6 @@
 <script>
 import { useDataStore } from "@/stores/useDataStore";
 
-// create Function to load data of current Pin if pin-ID already exists
-
 export default {
   name: "MarkerNoteEdit",
   data() {
@@ -57,43 +55,35 @@ export default {
   methods: {
     loadPinData() {
       this.currentMapId = this.dataStore.stateMaps.maps[0].id;
-      console.log(this.currentMapId);
       if (this.dataStore.newPin) {
-        console.log("yes");
-        // console.log(this.dataStore);
-        // console.log(this.dataStore.newPinGeoLocation);
         this.geoLocation = this.dataStore.newPinGeoLocation;
-        console.log(this.geoLocation);
       } else {
         this.currentPinId = this.dataStore.currentPinId;
-        console.log("else");
-        console.log(this.dataStore.statePins.pins);
-        // get data of current pin
         const currentPin = this.dataStore.statePins.pins.filter(
           (pin) => pin.id === this.currentPinId
         );
-        console.log(currentPin);
         this.header = currentPin[0].header;
         this.description = currentPin[0].description;
         this.geoLocation = currentPin[0].geoLocation;
       }
     },
     saveMarkerData() {
-      this.dataStore.createNewPin(
-        this.header,
-        this.description,
-        this.geoLocation,
-        this.currentMapId
-      );
-    },
-    editMarkerData() {
-      this.dataStore.editPin(
-        this.currentPinId,
-        this.header,
-        this.description,
-        this.geoLocation,
-        this.currentMapId
-      );
+      if (this.dataStore.newPin) {
+        this.dataStore.createNewPin(
+          this.header,
+          this.description,
+          this.geoLocation,
+          this.currentMapId
+        );
+      } else {
+        this.dataStore.editPin(
+          this.currentPinId,
+          this.header,
+          this.description,
+          this.geoLocation,
+          this.currentMapId
+        );
+      }
     },
   },
 };

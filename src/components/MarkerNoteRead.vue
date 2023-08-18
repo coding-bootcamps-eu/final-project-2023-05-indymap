@@ -55,11 +55,9 @@ export default {
   methods: {
     loadPinData() {
       this.currentPinId = this.dataStore.currentPinId;
-      console.log(this.currentPinId);
       const currentPin = this.dataStore.statePins.pins.filter(
         (pin) => pin.id === this.currentPinId
       );
-      console.log(currentPin);
       this.currentMapId = this.dataStore.stateMaps.maps[0].id;
       this.geoLocation = currentPin[0].geoLocation;
       this.header = currentPin[0].header;
