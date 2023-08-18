@@ -7,13 +7,9 @@ export const useDataStore = defineStore("state", {
       statePins: {},
       currentMap: "",
       currentPin: "",
-      currentPinId: "60ab73fa-1737-4e65-9c0d-dc9c5fc6b3c1",
-      newPinLocation: {},
+      currentPinId: "",
       newPin: false,
-      newPinGeoLocation: {
-        lat: 22.3,
-        lang: 25.5,
-      },
+      newPinLocation: {},
     };
   },
   actions: {

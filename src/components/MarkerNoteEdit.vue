@@ -56,7 +56,7 @@ export default {
     loadPinData() {
       this.currentMapId = this.dataStore.stateMaps.maps[0].id;
       if (this.dataStore.newPin) {
-        this.geoLocation = this.dataStore.newPinGeoLocation;
+        this.geoLocation = this.dataStore.newLocation;
       } else {
         this.currentPinId = this.dataStore.currentPinId;
         const currentPin = this.dataStore.statePins.pins.filter(
