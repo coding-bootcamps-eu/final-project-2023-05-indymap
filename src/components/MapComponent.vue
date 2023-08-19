@@ -1,21 +1,24 @@
 <template>
-  <div class="search__wrapper">
-    <div class="search__input__wrapper">
-      <div class="search__icon">
-        <img
-          :src="require('@/assets/icons/search-icon.svg')"
-          alt="searchIcon"
+  <div class="wrapper">
+    <div class="search__wrapper">
+      <div class="search__input__wrapper" v-if="notes">
+        <div class="search__icon">
+          <img
+            :src="require('@/assets/icons/search-icon.svg')"
+            alt="searchIcon"
+          />
+        </div>
+        <input
+          class="search__input"
+          type="text"
+          v-model="filterValue"
+          placeholder="Search for Marker"
         />
       </div>
-      <input
-        class="search__input"
-        type="text"
-        v-model="filterValue"
-        placeholder="Search for Marker"
-      />
+      <div class="search__input__wrapper" v-else>
+        <p>Loading Data...</p>
+      </div>
     </div>
-  </div>
-  <div class="wrapper">
     <div id="map" @click="closeNotePopup"></div>
     <div v-if="notePopupContent" class="note__popup__container">
       <div class="note__popup">
@@ -40,6 +43,20 @@
         </button>
       </div>
     </div>
+    <div
+      v-if="contextMenuVisible"
+      class="context__menu"
+      :style="{
+        top: contextMenuPosition.y + 'px',
+        left: contextMenuPosition.x + 'px',
+      }"
+    >
+      <p class="add__marker__location">
+        {{ contextMenuPosition.lat.toFixed(4) }},
+        {{ contextMenuPosition.lng.toFixed(4) }}
+      </p>
+      <button class="add__marker">Add Marker</button>
+    </div>
   </div>
 </template>
 
@@ -51,16 +68,10 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
-
-    let mapData = dataStore.stateData.maps.filter(
-      (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
-    );
-
-    /*     Komponente braucht die konkrete MapID von der Startseite zum rendern der richtigen Map*/
-    const notes = mapData[0].pins;
+    dataStore.fetchMapPins("7220e93a-804f-4c9e-880a-8e53e429c1b3");
 
     return {
-      notes,
+      dataStore,
     };
   },
   name: "MapComponent",
@@ -72,7 +83,15 @@ export default {
       filteredNotes: [],
       filterValue: null,
       markers: [],
+      contextMenuVisible: false,
+      contextMenuPosition: { x: 0, y: 0, lat: 0, lng: 0 },
     };
+  },
+  computed: {
+    notes() {
+      let pinData = this.dataStore.statePins.pins;
+      return pinData;
+    },
   },
   methods: {
     /* Fetches the user's geolocation from the browers if they grant permission*/
@@ -100,15 +119,25 @@ export default {
 
       this.map.setView([51.3127114, 9.4797461], 10);
 
-      L.tileLayer(
-        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
-        {
-          maxZoom: 19,
-          attribution: "© OpenStreetMap",
-        }
-      ).addTo(this.map);
+      if (localStorage.getItem("darkMode") === "enabled") {
+        L.tileLayer(
+          "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/dark_all/{z}/{x}/{y}.png",
+          {
+            maxZoom: 19,
+            attribution: "© OpenStreetMap",
+          }
+        ).addTo(this.map);
+      } else {
+        L.tileLayer(
+          "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png",
+          {
+            maxZoom: 19,
+            attribution: "© OpenStreetMap",
+          }
+        ).addTo(this.map);
+      }
 
-      this.map.on("contextmenu", (e) => this.createNewMarker(e));
+      this.map.on("contextmenu", this.showContextMenu);
     },
 
     /* Goes through the notes array and adds a marker for each pin note*/
@@ -145,6 +174,7 @@ export default {
       for (let i = 0; i < this.notes.length; i++) {
         if (this.notes[i].id === e.target.options.id) {
           this.notePopupContent = this.notes[i];
+          this.dataStore.currentPin = this.notes[i].id;
           break;
         }
       }
@@ -153,6 +183,7 @@ export default {
     /* Closes the popup again*/
     closeNotePopup() {
       this.notePopupContent = null;
+      this.dataStore.currentPin = "";
     },
 
     /* Filters all the pin notes based on the text provided in the input field*/
@@ -174,23 +205,37 @@ export default {
       });
     },
 
-    /* Gets the geolocation information from a user's click and forwards user to the "create new pin" page*/
-    createNewMarker(e) {
-      let clickLocation = e.latlng;
-      console.log(clickLocation);
+    showContextMenu(e) {
+      this.contextMenuPosition = {
+        x: e.originalEvent.clientX,
+        y: e.originalEvent.clientY,
+        ...e.latlng,
+      };
+      this.contextMenuVisible = true;
+      this.dataStore.newPinLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
+
+      // Close the context menu when clicked outside
+      document.addEventListener("click", this.closeContextMenu, { once: true });
+    },
+
+    closeContextMenu() {
+      this.contextMenuVisible = false;
+      this.dataStore.newPinLocation = {};
     },
   },
   created() {
     this.fetchLocation();
-    this.filterNotes();
   },
   mounted() {
     this.renderMap();
-    this.addMarker();
   },
   watch: {
     currentLocation(newLocation) {
       this.map.setView([newLocation.lat, newLocation.lng], 13);
+    },
+    notes() {
+      this.filterNotes();
+      this.addMarker();
     },
     filterValue() {
       this.filterNotes();
@@ -206,15 +251,42 @@ p {
   margin: 0;
 }
 
+.context__menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  z-index: 5000;
+}
+
+.add__marker {
+  width: 100%;
+  padding: 10px;
+
+  border: none;
+  background-color: transparent;
+
+  text-align: start;
+
+  cursor: pointer;
+}
+
+.add__marker:hover {
+  background-color: hsla(0, 0%, 50%, 0.15);
+}
+
+.add__marker__location {
+  padding: 10px;
+}
+
 .search__wrapper {
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
 
-  top: 0;
+  top: 1rem;
   width: 100%;
-
-  padding-top: 2rem;
 
   z-index: 4000;
 }
@@ -229,7 +301,7 @@ p {
   height: 60px;
 
   background-color: snow;
-  border: 2px solid black;
+  border: 1px solid grey;
   border-radius: 50px;
 
   padding: 1rem;
@@ -245,9 +317,11 @@ p {
   height: 100%;
   width: 100%;
   border: transparent;
+  background-color: snow;
 }
 
 .wrapper {
+  position: relative;
   height: 100%;
 }
 
