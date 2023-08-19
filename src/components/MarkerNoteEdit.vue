@@ -4,7 +4,7 @@
       <label for="marker-name">Please give your Marker a name</label>
       <input
         type="text"
-        v-model.trim="placeholderTitle"
+        v-model.trim="header"
         placeholder=" Your Marker"
         id="marker-name"
       />
@@ -13,18 +13,18 @@
       <label for="marker-description">Please decribe your marker</label>
       <textarea
         name="marker-description-input"
-        v-model.trim="placeholderDescription"
+        v-model.trim="description"
         placeholder=" What did you mark?"
         id="marker-description"
         cols="10"
         rows="5"
       ></textarea>
     </article>
-    <article class="marker-edit-image-input-container">
-      <button>Upload Image</button>
-    </article>
-    <router-link class="router-link router-link-save-marker" to="/about">
-      <button @click="saveMarkerData">Save Marker</button></router-link
+    <router-link class="router-link router-link-save-marker" to="/view-pin">
+      <button @click="saveMarkerData()">Save Marker</button></router-link
+    >
+    <router-link class="router-link router-link-back-to-map" to="/map">
+      <button>Back to map</button></router-link
     >
   </section>
 </template>
@@ -36,8 +36,11 @@ export default {
   name: "MarkerNoteEdit",
   data() {
     return {
-      placeholderTitle: "a title",
-      placeholderDescription: "a description",
+      header: "",
+      description: "",
+      currentPinId: "",
+      currentMapId: "",
+      geoLocation: {},
     };
   },
   setup() {
@@ -46,36 +49,43 @@ export default {
       dataStore,
     };
   },
+  created() {
+    this.loadPinData();
+  },
   methods: {
+    loadPinData() {
+      this.currentMapId = this.dataStore.stateMaps.maps[0].id;
+      if (this.dataStore.newPin) {
+        this.geoLocation = this.dataStore.newLocation;
+      } else {
+        this.currentPinId = this.dataStore.currentPinId;
+        const currentPin = this.dataStore.statePins.pins.filter(
+          (pin) => pin.id === this.currentPinId
+        );
+        this.header = currentPin[0].header;
+        this.description = currentPin[0].description;
+        this.geoLocation = currentPin[0].geoLocation;
+      }
+    },
     saveMarkerData() {
-      // check if marker alrady exists or if existing marker is edited
-      //    (check if marker with same location data exists in user data???)
-      // if new marker, POST to API:
-      // {
-      //   fetch("http://exampleURL", {
-      //     method: "POST",
-      //     headers: { "content-type": "application/json" },
-      //     body: JSON.stringify(examplePiniaStrore.exampleUser.newMarker),
-      //   })
-      //     .then((res) => res.json())
-      //     .then((newMarkerFromApi) => {
-      //       examplePiniaStore.push(newMarkerFromApi);
-      //       // synchronize with local storage
-      //     });
-      // }
-      // if existing marker being edited, PUT:
-      // fetch("http://exampleURL", {
-      //   method: "PUT",
-      //   headers: { "content-type": "application/JSON" },
-      //   body: JSON.stringify(examplePiniaStrore.exampleUser.existingMarker),
-      // })
-      //   .then((res) => res.json())
-      //   .then((updatedMarker) => {
-      //     // synch with local storage
-      //   });
+      if (this.dataStore.newPin) {
+        this.dataStore.createNewPin(
+          this.header,
+          this.description,
+          this.geoLocation,
+          this.currentMapId
+        );
+      } else {
+        this.dataStore.editPin(
+          this.currentPinId,
+          this.header,
+          this.description,
+          this.geoLocation,
+          this.currentMapId
+        );
+      }
     },
   },
-  computed: {},
 };
 </script>
 <style scoped>
@@ -87,8 +97,7 @@ export default {
 }
 
 .marker-edit-headline-input-container,
-.marker-edit-text-input-container,
-.marker-edit-image-input-container {
+.marker-edit-text-input-container {
   display: flex;
   flex-direction: column;
 }
