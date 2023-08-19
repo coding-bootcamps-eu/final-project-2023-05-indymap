@@ -1,29 +1,31 @@
 <template>
-  <section class="marker-container">
-    <router-link class="router-link router-link-map-view" to="/about">
-      <img
-        class="icon-left"
-        :src="require('@/assets/icons/arrow-left-circle.svg')"
-        alt="arrow pointing left"
-    /></router-link>
+  <div>
+    <section class="marker-container">
+      <router-link class="router-link router-link-map-view" to="/about">
+        <img
+          class="icon-left"
+          :src="require('@/assets/icons/arrow-left-circle.svg')"
+          alt="arrow pointing left"
+      /></router-link>
 
-    <h2 class="marker-headline">
-      {{ pinData[0].header }}
-    </h2>
-    <p class="marker-text">
-      {{ pinData[0].description }}
-    </p>
-    <!-- <img src="https://picsum.photos/300/200" alt="image of something amazing" /> -->
+      <h2 class="marker-headline">
+        {{ this.header }}
+      </h2>
+      <p class="marker-text">
+        {{ this.description }}
+      </p>
+      <router-link class="router-link router-link-edit-marker" to="/edit-pin"
+        ><button>Edit Marker</button></router-link
+      >
 
-    <router-link class="router-link router-link-edit-marker" to="/about"
-      ><button>Edit Marker</button></router-link
-    >
-
-    <router-link class="router-link router-link-delete-marker" to="/about"
-      ><button @click="deleteMarker">Delete Marker</button></router-link
-    >
-    <!-- <button @click="testStuff">Test</button> -->
-  </section>
+      <router-link
+        @click="deletePinMethod()"
+        class="router-link router-link-delete-marker"
+        to="/map"
+        ><button>Delete Marker</button></router-link
+      >
+    </section>
+  </div>
 </template>
 
 <script>
@@ -31,44 +33,41 @@ import { useDataStore } from "@/stores/useDataStore";
 
 export default {
   name: "MarkerNoteRead",
+  data() {
+    return {
+      header: "",
+      description: "",
+      currentPinId: "",
+      currentMapId: "",
+      geoLocation: {},
+    };
+  },
   setup() {
     const dataStore = useDataStore();
-    const mapData = dataStore.stateData.maps.filter(
-      (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
-    );
-    console.log(mapData);
-    console.log(mapData[0].pins[0]);
-    const pinData = mapData[0].pins.filter((pin) => pin.id === 1);
     return {
-      pinData,
+      dataStore,
     };
-    // let mapData = dataStore.stateData.maps.filter(
-    //   (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
-    // );
-    // // let pinData = mapData[0].pins.filter((pin) => pin.id === 1);
-    // return {
-    //   mapData,
-    // };
   },
+  created() {
+    this.loadPinData();
+  },
+
   methods: {
-    deleteMarker() {
-      // delete marker from API / storage
+    loadPinData() {
+      this.currentPinId = this.dataStore.currentPinId;
+      const currentPin = this.dataStore.statePins.pins.filter(
+        (pin) => pin.id === this.currentPinId
+      );
+      this.currentMapId = this.dataStore.stateMaps.maps[0].id;
+      this.geoLocation = currentPin[0].geoLocation;
+      this.header = currentPin[0].header;
+      this.description = currentPin[0].description;
     },
-    testStuff() {
-      // console.log(this.currentData);
-      // console.log(this.dataStore.stateData);
-      // const mapData = this.dataStore.stateData.maps.filter(
-      //   (map) => map.id === "7220e93a-804f-4c9e-880a-8e53e429c1b3"
-      // );
-      // console.log(mapData);
-      // console.log(mapData[0].pins[0]);
-      // const pinData = mapData[0].pins.filter((pin) => pin.id === 1);
-      // console.log(pinData);
-      // console.log(pinData[0].header);
-      // console.log(mapData.pins[0]);
+    deletePinMethod() {
+      this.dataStore.deletePin(this.currentPinId);
+      this.dataStore.currentPin = "";
     },
   },
-  computed: {},
 };
 </script>
 <style scoped>
