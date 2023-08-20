@@ -18,12 +18,21 @@
         ><button>Edit Marker</button></router-link
       >
 
-      <router-link
-        @click="deletePinMethod()"
-        class="router-link router-link-delete-marker"
-        to="/map"
-        ><button>Delete Marker</button></router-link
-      >
+      <button @click="this.deleteModal = true">Delete Marker</button>
+      <div v-if="this.deleteModal" class="delete-pin-modal">
+        <p class="modal-text">Do you really want to delete this pin?</p>
+        <div class="btn-wrapper">
+          <button @click="this.deleteModal = false" class="btn-deny-delete">
+            Cancel
+          </button>
+          <router-link
+            @click="deletePinMethod()"
+            class="router-link router-link-delete-marker"
+            to="/map"
+            ><button class="btn-confirm-delete">Delete Pin</button></router-link
+          >
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -40,6 +49,7 @@ export default {
       currentPinId: "",
       currentMapId: "",
       geoLocation: {},
+      deleteModal: false,
     };
   },
   setup() {
@@ -54,10 +64,13 @@ export default {
 
   methods: {
     loadPinData() {
+      console.log(this.dataStore.statePins);
       this.currentPinId = this.dataStore.currentPinId;
+      console.log(this.currentPinId);
       const currentPin = this.dataStore.statePins.pins.filter(
         (pin) => pin.id === this.currentPinId
       );
+      console.log(currentPin[0]);
       this.currentMapId = this.dataStore.stateMaps.maps[0].id;
       this.geoLocation = currentPin[0].geoLocation;
       this.header = currentPin[0].header;
@@ -101,9 +114,37 @@ export default {
   text-decoration: none;
 }
 
-img {
-  width: 100%;
+.delete-pin-modal {
+  border: 2px solid black;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  top: 15%;
+  background: white;
+  border-radius: 0.5rem;
 }
+
+.btn-close-deletion-modal {
+  border-radius: 90%;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: none;
+  position: absolute;
+  align-self: flex-start;
+}
+.btn-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-items: center;
+}
+.btn-confirm-delete {
+  background-color: rgb(252, 59, 0);
+}
+
 button {
   color: white;
   font-weight: 700;
