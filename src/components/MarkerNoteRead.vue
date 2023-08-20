@@ -14,23 +14,26 @@
       <p class="marker-text">
         {{ this.description }}
       </p>
-      <router-link class="router-link router-link-edit-marker" to="/edit-pin"
-        ><button>Edit Marker</button></router-link
-      >
-
-      <button @click="this.deleteModal = true">Delete Marker</button>
-      <div v-if="this.deleteModal" class="delete-pin-modal">
-        <p class="modal-text">Do you really want to delete this pin?</p>
-        <div class="btn-wrapper">
-          <button @click="this.deleteModal = false" class="btn-deny-delete">
-            Cancel
-          </button>
-          <router-link
-            @click="deletePinMethod()"
-            class="router-link router-link-delete-marker"
-            to="/map"
-            ><button class="btn-confirm-delete">Delete Pin</button></router-link
-          >
+      <div class="btn-wrapper">
+        <button @click="this.deleteModal = true">Delete Pin</button>
+        <router-link class="router-link router-link-edit-marker" to="/edit-pin"
+          ><button>Edit Pin</button></router-link
+        >
+        <div v-if="this.deleteModal" class="delete-pin-modal">
+          <p class="modal-text">Do you really want to delete this pin?</p>
+          <div class="btn-wrapper">
+            <button @click="this.deleteModal = false" class="btn-deny-delete">
+              Cancel
+            </button>
+            <router-link
+              @click="deletePinMethod()"
+              class="router-link router-link-delete-marker"
+              to="/map"
+              ><button class="btn-confirm-delete">
+                Delete Pin
+              </button></router-link
+            >
+          </div>
         </div>
       </div>
     </section>
@@ -58,8 +61,8 @@ export default {
       dataStore,
     };
   },
-  created() {
-    this.loadPinData();
+  async created() {
+    await this.loadPinData();
   },
 
   methods: {
@@ -102,10 +105,15 @@ export default {
   align-self: flex-start;
 }
 .icon-left {
-  width: 1.5rem;
+  width: 1.75rem;
+}
+.marker-headline {
+  margin-top: 2rem;
+  margin-inline: 2rem;
 }
 .marker-text {
   text-align: justify;
+  margin-inline: 2rem;
 }
 
 .router-link,
@@ -148,7 +156,7 @@ export default {
 button {
   color: white;
   font-weight: 700;
-  width: 8rem;
+  width: 7rem;
   height: 2rem;
   border-radius: 10px;
   border: 0;

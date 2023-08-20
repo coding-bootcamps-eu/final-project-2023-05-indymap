@@ -21,7 +21,9 @@
       ></textarea>
     </article>
     <router-link class="router-link router-link-save-marker" to="/view-pin">
-      <button @click="saveMarkerData()">Save Marker</button></router-link
+      <button @click="saveMarkerData(), $emit('pin-saved')">
+        Save Marker
+      </button></router-link
     >
     <router-link class="router-link router-link-back-to-map" to="/map">
       <button>Back to map</button></router-link
@@ -34,6 +36,7 @@ import { useDataStore } from "@/stores/useDataStore";
 
 export default {
   name: "MarkerNoteEdit",
+  emits: ["pin-saved"],
   data() {
     return {
       header: "",
@@ -45,12 +48,14 @@ export default {
   },
   setup() {
     const dataStore = useDataStore();
+    dataStore.fetchMapPins(dataStore.currentMap);
     return {
       dataStore,
     };
   },
-  created() {
-    this.loadPinData();
+  async created() {
+    await this.loadPinData();
+    await this.dataStore.fetchMapPins(this.dataStore.currentMap);
   },
   methods: {
     loadPinData() {
@@ -75,6 +80,7 @@ export default {
           this.geoLocation,
           this.currentMapId
         );
+        this.dataStore.fetchMapPins(this.dataStore.currentMap);
       } else {
         this.dataStore.editPin(
           this.currentPinId,
@@ -83,6 +89,7 @@ export default {
           this.geoLocation,
           this.currentMapId
         );
+        this.dataStore.fetchMapPins(this.dataStore.currentMap);
       }
     },
   },
