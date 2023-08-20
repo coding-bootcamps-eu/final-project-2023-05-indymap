@@ -15,9 +15,11 @@
         {{ this.description }}
       </p>
       <div class="btn-wrapper">
-        <button @click="this.deleteModal = true">Delete Pin</button>
+        <button class="btn-delete-pin" @click="this.deleteModal = true">
+          Delete Pin
+        </button>
         <router-link class="router-link router-link-edit-marker" to="/edit-pin"
-          ><button>Edit Pin</button></router-link
+          ><button class="btn-edit-pin">Edit Pin</button></router-link
         >
         <div v-if="this.deleteModal" class="delete-pin-modal">
           <p class="modal-text">Do you really want to delete this pin?</p>
@@ -92,7 +94,20 @@ export default {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  --clr-btn-alert: rgb(252, 59, 0);
+  --clr-btn-alert-minor: rgb(248, 120, 81);
+  --clr-btn: rgb(54, 54, 54);
+  --clr-btn-hover: rgb(187, 187, 187);
+  --clr-btn-active: rgb(0, 0, 0);
+  --clr-background: white;
+  --clr-text: black;
+  --clr-icon-back-to-map: rgb(226, 255, 226);
 }
+html {
+  background-color: var(--clr-background);
+  color: var(--clr-text);
+}
+
 .marker-container {
   padding: 1.5rem 2rem;
   display: flex;
@@ -105,7 +120,18 @@ export default {
   align-self: flex-start;
 }
 .icon-left {
-  width: 1.75rem;
+  width: 2rem;
+  background-color: var(--clr-background);
+  border-radius: 90%;
+  transition: 150ms;
+}
+.icon-left:hover {
+  box-shadow: var(--clr-text) 0 0 2px;
+  background-color: var(--clr-icon-back-to-map);
+}
+.icon-left:active {
+  box-shadow: var(--clr-text) 0 0 2px;
+  background-color: var(--clr-icon-back-to-map);
 }
 .marker-headline {
   margin-top: 2rem;
@@ -121,7 +147,9 @@ export default {
   color: black;
   text-decoration: none;
 }
-
+.btn-delete-pin {
+  background-color: var(--clr-btn-alert-minor);
+}
 .delete-pin-modal {
   border: 2px solid black;
   padding: 2rem;
@@ -130,9 +158,15 @@ export default {
   align-items: center;
   gap: 1rem;
   position: absolute;
-  top: 15%;
+  margin-inline: auto;
+  left: 3rem;
+  right: 3rem;
+  text-align: center;
+  top: 20%;
   background: white;
   border-radius: 0.5rem;
+  opacity: 100%;
+  transition: opacity 1s;
 }
 
 .btn-close-deletion-modal {
@@ -150,16 +184,27 @@ export default {
   justify-items: center;
 }
 .btn-confirm-delete {
-  background-color: rgb(252, 59, 0);
+  background-color: var(--clr-btn-alert);
 }
 
 button {
+  font-size: 1rem;
   color: white;
   font-weight: 700;
-  width: 7rem;
-  height: 2rem;
-  border-radius: 10px;
+  width: 8rem;
+  height: 2.5rem;
+  border-radius: 7px;
   border: 0;
   background-color: rgb(148, 148, 148);
+  text-align: center;
+}
+
+button:hover {
+  background-color: var(--clr-btn-hover);
+  transition: 150ms;
+}
+
+button:active {
+  background-color: var(--clr-btn-active);
 }
 </style>
