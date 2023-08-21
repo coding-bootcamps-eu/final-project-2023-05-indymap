@@ -78,7 +78,6 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
-
     dataStore.fetchMapPins(dataStore.currentMapId);
 
     return {
@@ -232,6 +231,7 @@ export default {
 
     closeContextMenu() {
       this.contextMenuVisible = false;
+      this.dataStore.newPinLocation = {};
     },
   },
   created() {
@@ -364,10 +364,11 @@ p {
   max-width: 80%;
 
   border-radius: 10px;
-  background-color: snow;
-  color: black;
+  background-color: var(--main-card-bg-clr);
+  color: var(--clr-text);
 
   margin-bottom: 1.5rem;
+  box-shadow: var(--clr-text) 0 0 5px 0px;
 }
 
 .note__popup__image {
@@ -452,9 +453,5 @@ p {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.back-to-home {
-  background-color: red;
 }
 </style>

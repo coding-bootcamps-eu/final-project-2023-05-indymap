@@ -1,12 +1,12 @@
 :root {
   --main-bg-color: #c4edd6;
   --header-bg-color: #63da96;
-  --main-card-bg-clr: rgb(247, 247, 252);
-  --main-card-bg-clr-hover: rgb(245, 190, 139);
+  --main-card-bg-clr: rgb(252, 251, 247);
+  --main-card-bg-clr-hover: #d98757;
   --main-color: #a3c6b3;
   --main-accent-color: #52b788;
-  --clr-btn-alert: rgb(252, 59, 0);
-  --clr-btn-alert-minor: rgb(248, 120, 81);
+  --clr-btn-alert: rgb(228, 53, 0);
+  --clr-btn-alert-minor: #c0591e;
   --clr-btn: rgb(54, 54, 54);
   --clr-btn-hover: rgb(187, 187, 187);
   --clr-btn-active: rgb(0, 0, 0);

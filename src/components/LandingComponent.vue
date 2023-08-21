@@ -209,7 +209,8 @@ button:active {
 .flavor-text-map {
   position: relative;
   display: flex;
-  max-height: 15%;
+  height: 10rem;
+  max-height: 18%;
   border-radius: 10px;
   background-color: var(--main-card-bg-clr);
   box-shadow: 0px 0px 5px 2px hsla(0, 0%, 50%, 0.3);

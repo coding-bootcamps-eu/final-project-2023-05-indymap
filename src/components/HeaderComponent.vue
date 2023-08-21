@@ -51,7 +51,7 @@ header {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eee;
-  height: 4rem;
+  height: 5rem;
   padding-inline: 1rem;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   background-color: var(--header-bg-color);
@@ -93,7 +93,7 @@ header {
   width: 2rem;
   height: 2rem;
   right: 1rem;
-  top: 1rem;
+  top: 1.25rem;
   display: flex;
   justify-content: space-between;
   flex-direction: column;

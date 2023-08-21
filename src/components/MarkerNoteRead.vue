@@ -145,7 +145,7 @@ html {
   background-color: var(--clr-btn-alert-minor);
 }
 .delete-pin-modal {
-  border: 2px solid black;
+  box-shadow: black 0 0 5px 1px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -156,7 +156,7 @@ html {
   left: 3rem;
   right: 3rem;
   text-align: center;
-  top: 20%;
+  top: 30%;
   background: white;
   border-radius: 0.5rem;
   opacity: 100%;
@@ -189,7 +189,7 @@ button {
   height: 2.5rem;
   border-radius: 7px;
   border: 0;
-  background-color: rgb(148, 148, 148);
+  background-color: var(--clr-btn);
   text-align: center;
 }
 
