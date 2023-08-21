@@ -109,13 +109,15 @@ body {
 }
 
 .container {
+  margin: auto;
   display: flex;
   flex-direction: column;
   background-color: #c4edd6;
   padding: 20px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  max-width: 800px;
+  width: 100%;
 
   height: 100%;
 }
@@ -173,7 +175,7 @@ button:hover:not(:disabled) {
 
 @media (min-width: 768px) {
   .container {
-    max-width: 600px;
+    max-width: 800px;
   }
 
   .input-group input {
