@@ -1,8 +1,6 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <RouterLink to="/start">Landing</RouterLink> |
-    <router-link to="/about">About</router-link> |
+    <RouterLink to="/">Landing</RouterLink> |
     <RouterLink to="/edit-pin">Edit Pin</RouterLink> |
     <RouterLink to="/view-pin">View Pin</RouterLink> |
     <RouterLink to="/map">Map</RouterLink> |
