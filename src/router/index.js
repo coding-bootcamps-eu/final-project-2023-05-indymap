@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "../views/LandingView.vue";
 import HomeView from "../views/HomeView.vue";
-import MarkerNoteEdit from "@/components/MarkerNoteEdit.vue";
+import EditPinView from "@/views/EditPinView.vue";
 import MapView from "../views/MapView.vue";
-import MarkerNoteRead from "@/components/MarkerNoteRead.vue";
+import PinView from "@/views/PinView.vue";
 import CreateNewMap from "@/views/CreateNewMapView.vue";
 
 const routes = [
@@ -27,9 +27,9 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
-    path: "/view-marker",
-    name: "view marker",
-    component: MarkerNoteRead,
+    path: "/view-pin",
+    name: "view pin",
+    component: PinView,
   },
   {
     path: "/map",
@@ -42,9 +42,9 @@ const routes = [
     component: CreateNewMap,
   },
   {
-    path: "/edit-marker",
-    name: "edit marker",
-    component: MarkerNoteEdit,
+    path: "/edit-pin",
+    name: "edit pin",
+    component: EditPinView,
   },
 ];
 

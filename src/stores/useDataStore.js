@@ -5,27 +5,28 @@ export const useDataStore = defineStore("state", {
     return {
       stateMaps: {},
       statePins: {},
-      currentMap: "",
-      currentPin: "",
+      currentMapId: "",
+      currentPinId: "",
+      newPin: false,
       newPinLocation: {},
     };
   },
   actions: {
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
-      fetch(`http://localhost:3000/users/${userID}?_embed=maps`)
+      fetch(`${process.env.VUE_APP_API_URL}/users/${userID}?_embed=maps`)
         .then((response) => response.json())
         .then((data) => (this.stateMaps = data));
     },
 
     fetchMapPins(mapID) {
-      fetch(`http://localhost:3000/maps/${mapID}?_embed=pins`)
+      fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}?_embed=pins`)
         .then((response) => response.json())
         .then((data) => (this.statePins = data));
     },
 
     createNewUser(userName) {
-      return fetch("http://localhost:3000/users", {
+      return fetch(`${process.env.VUE_APP_API_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,8 +42,8 @@ export const useDataStore = defineStore("state", {
         );
     },
 
-    createNewMap(mapTitle, mapDescripion, userID) {
-      fetch("http://localhost:3000/maps", {
+    createNewMap(mapTitle, mapDescription, userID) {
+      fetch(`${process.env.VUE_APP_API_URL}/maps`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +51,7 @@ export const useDataStore = defineStore("state", {
         body: JSON.stringify({
           userId: userID,
           mapTitle: mapTitle,
-          mapDescripion: mapDescripion,
+          mapDescription: mapDescription,
         }),
       })
         .then((response) => response.json())
@@ -58,13 +59,13 @@ export const useDataStore = defineStore("state", {
     },
 
     deleteMap(mapID) {
-      fetch(`http://localhost:3000/maps/${mapID}`, {
+      fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}`, {
         method: "DELETE",
       }).then((response) => response.json());
     },
 
-    createNewPin(header, descripion, geoLocation, mapId) {
-      fetch("http://localhost:3000/pins", {
+    createNewPin(header, description, geoLocation, mapId) {
+      fetch(`${process.env.VUE_APP_API_URL}/pins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,17 +73,17 @@ export const useDataStore = defineStore("state", {
         body: JSON.stringify({
           mapId: mapId,
           header: header,
-          descripion: descripion,
+          description: description,
           geoLocation: geoLocation,
           createdAt: new Date(),
         }),
       })
         .then((response) => response.json())
-        .then((data) => (this.currentMap = data.id));
+        .then((data) => (this.currentPinId = data.id));
     },
 
-    editPin(pinId, header, descripion, geoLocation, mapId) {
-      fetch(`http://localhost:3000/pins/${pinId}`, {
+    editPin(pinId, header, description, geoLocation, mapId) {
+      fetch(`${process.env.VUE_APP_API_URL}/pins/${pinId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +91,7 @@ export const useDataStore = defineStore("state", {
         body: JSON.stringify({
           mapId: mapId,
           header: header,
-          descripion: descripion,
+          description: description,
           geoLocation: geoLocation,
         }),
       })
@@ -99,7 +100,7 @@ export const useDataStore = defineStore("state", {
     },
 
     deletePin(pinID) {
-      fetch(`http://localhost:3000/pins/${pinID}`, {
+      fetch(`${process.env.VUE_APP_API_URL}/pins/${pinID}`, {
         method: "DELETE",
       }).then((response) => response.json());
     },
