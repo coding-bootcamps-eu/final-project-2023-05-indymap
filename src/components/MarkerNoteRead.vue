@@ -27,14 +27,9 @@
             <button @click="this.deleteModal = false" class="btn-deny-delete">
               Cancel
             </button>
-            <router-link
-              @click="deletePinMethod()"
-              class="router-link router-link-delete-marker"
-              to="/map"
-              ><button class="btn-confirm-delete">
-                Delete Pin
-              </button></router-link
-            >
+            <button @click="deletePinMethod" class="btn-confirm-delete">
+              Delete Pin
+            </button>
           </div>
         </div>
       </div>
@@ -59,6 +54,7 @@ export default {
   },
   setup() {
     const dataStore = useDataStore();
+
     return {
       dataStore,
     };
@@ -69,21 +65,23 @@ export default {
 
   methods: {
     loadPinData() {
-      console.log(this.dataStore.statePins);
+      /* console.log(this.dataStore.statePins); */
       this.currentPinId = this.dataStore.currentPinId;
       // console.log(this.currentPinId);
       const currentPin = this.dataStore.statePins.pins.filter(
         (pin) => pin.id === this.currentPinId
       );
-      // console.log(currentPin[0]);
-      this.currentMapId = this.dataStore.stateMaps.maps[0].id;
-      this.geoLocation = currentPin[0].geoLocation;
+      /* console.log(currentPin); */
+      this.currentMapId = this.dataStore.currentMapId;
       this.header = currentPin[0].header;
+      this.geoLocation = currentPin[0].geoLocation;
+
       this.description = currentPin[0].description;
     },
-    deletePinMethod() {
-      this.dataStore.deletePin(this.currentPinId);
+    async deletePinMethod() {
+      await this.dataStore.deletePin(this.currentPinId);
       this.dataStore.currentPin = "";
+      this.$router.push("/map");
     },
   },
 };

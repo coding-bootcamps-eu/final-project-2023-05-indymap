@@ -5,16 +5,18 @@ export const useDataStore = defineStore("state", {
     return {
       stateMaps: {},
       statePins: {},
-      currentMapId: "7220e93a-804f-4c9e-880a-8e53e429c1b3",
-      currentPinId: "9623d39d-55f4-434f-bd31-3c776952d7a4",
+      currentMapId: "",
+      currentPinId: "",
       newPin: false,
       newPinLocation: {},
       existingUser: false,
+      userId: "",
     };
   },
   getters: {
     checkUser() {
       if (localStorage.getItem("userID") !== null) {
+        this.userId = localStorage.getItem("userID");
         return (this.existingUser = true);
       } else {
         return (this.existingUser = false);
@@ -24,13 +26,13 @@ export const useDataStore = defineStore("state", {
   actions: {
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
-      fetch(`${process.env.VUE_APP_API_URL}/users/${userID}?_embed=maps`)
+      return fetch(`${process.env.VUE_APP_API_URL}/users/${userID}?_embed=maps`)
         .then((response) => response.json())
         .then((data) => (this.stateMaps = data));
     },
 
     fetchMapPins(mapID) {
-      fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}?_embed=pins`)
+      return fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}?_embed=pins`)
         .then((response) => response.json())
         .then((data) => (this.statePins = data));
     },
@@ -53,7 +55,7 @@ export const useDataStore = defineStore("state", {
     },
 
     createNewMap(mapTitle, mapDescription, mapViewLocation, userID) {
-      fetch(`${process.env.VUE_APP_API_URL}/maps`, {
+      return fetch(`${process.env.VUE_APP_API_URL}/maps`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,13 +72,15 @@ export const useDataStore = defineStore("state", {
     },
 
     deleteMap(mapID) {
-      fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}`, {
+      return fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}`, {
         method: "DELETE",
-      }).then((response) => response.json());
+      })
+        .then((response) => response.json())
+        .then(() => window.location.reload());
     },
 
     createNewPin(header, description, geoLocation, mapId) {
-      fetch(`${process.env.VUE_APP_API_URL}/pins`, {
+      return fetch(`${process.env.VUE_APP_API_URL}/pins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +98,7 @@ export const useDataStore = defineStore("state", {
     },
 
     editPin(pinId, header, description, geoLocation, mapId) {
-      fetch(`${process.env.VUE_APP_API_URL}/pins/${pinId}`, {
+      return fetch(`${process.env.VUE_APP_API_URL}/pins/${pinId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -111,9 +115,11 @@ export const useDataStore = defineStore("state", {
     },
 
     deletePin(pinID) {
-      fetch(`${process.env.VUE_APP_API_URL}/pins/${pinID}`, {
+      return fetch(`${process.env.VUE_APP_API_URL}/pins/${pinID}`, {
         method: "DELETE",
-      }).then((response) => response.json());
+      })
+        .then((response) => response.json())
+        .then(() => this.fetchMapPins(this.currentMapId));
     },
   },
 });

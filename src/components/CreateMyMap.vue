@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Indymap</h1>
+    <h1 class="title">Create a new map</h1>
     <div class="input-group">
       <i class="fas fa-map-marker-alt"></i>
       <input type="text" v-model="mapTitle" placeholder="Enter Map Title" />
