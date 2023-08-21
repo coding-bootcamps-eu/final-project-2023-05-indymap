@@ -64,7 +64,7 @@ export default {
     loadPinData() {
       this.currentMapId = this.dataStore.stateMaps.maps[0].id;
       if (this.dataStore.newPin) {
-        this.geoLocation = this.dataStore.newLocation;
+        this.geoLocation = this.dataStore.newPinLocation;
       } else {
         this.currentPinId = this.dataStore.currentPinId;
         const currentPin = this.dataStore.statePins.pins.filter(
@@ -83,6 +83,7 @@ export default {
           this.geoLocation,
           this.currentMapId
         );
+        this.dataStore.newPin = true;
       } else {
         this.dataStore.editPin(
           this.currentPinId,
@@ -92,6 +93,7 @@ export default {
           this.currentMapId
         );
       }
+      this.dataStore.fetchMapPins(this.dataStore.currentMapId);
     },
   },
 };
