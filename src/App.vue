@@ -17,7 +17,7 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
-    dataStore.checkUser();
+    dataStore.checkUser;
     dataStore.fetchUserMaps("4a3eac09-f652-4d5e-8f4d-691502a71ef6");
     dataStore.fetchMapPins("7220e93a-804f-4c9e-880a-8e53e429c1b3");
   },
