@@ -11,6 +11,7 @@ export const useDataStore = defineStore("state", {
       newPinLocation: {},
     };
   },
+
   actions: {
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
@@ -42,7 +43,7 @@ export const useDataStore = defineStore("state", {
         );
     },
 
-    createNewMap(mapTitle, mapDescription, userID) {
+    createNewMap(mapTitle, mapDescription, mapViewLocation, userID) {
       fetch(`${process.env.VUE_APP_API_URL}/maps`, {
         method: "POST",
         headers: {
@@ -52,6 +53,7 @@ export const useDataStore = defineStore("state", {
           userId: userID,
           mapTitle: mapTitle,
           mapDescription: mapDescription,
+          mapViewLocation: mapViewLocation,
         }),
       })
         .then((response) => response.json())
