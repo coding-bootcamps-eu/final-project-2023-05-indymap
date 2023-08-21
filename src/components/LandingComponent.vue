@@ -1,9 +1,6 @@
 <template>
   <main>
-    <div
-      v-if="localStorage.getItem('userID') === null"
-      class="new-user-introduction"
-    >
+    <div v-if="dataStore.existingUser === false" class="new-user-introduction">
       <p>
         Welcome to Indymap new user. Please tell us your name so that we know
         who you are in the future.
@@ -16,11 +13,16 @@
     </div>
     <div v-else>
       <h1>Welcome back user, select your map to get started:</h1>
-      <div class="flavor-text-map">
+      <div
+        class="flavor-text-map"
+        :map="dataStore.stateMaps"
+        :key="map.id"
+        v-for="map in dataStore.stateMaps"
+      >
         <img src="https://picsum.photos/seed/picsum/100/100" alt="map" />
         <div class="heading-and-description">
-          <h2>Just a map</h2>
-          <p>Just a description</p>
+          <h2>{{ dataStore.stateMaps.mapTitle }}</h2>
+          <p>{{ dataStore.stateMaps.mapDescription }}</p>
           <button class="delete-button">Delete map</button>
         </div>
       </div>

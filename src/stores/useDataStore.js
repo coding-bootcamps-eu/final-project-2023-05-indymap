@@ -9,7 +9,17 @@ export const useDataStore = defineStore("state", {
       currentPinId: "",
       newPin: false,
       newPinLocation: {},
+      existingUser: false,
     };
+  },
+  getters: {
+    checkUser() {
+      if (localStorage.getItem("userID") !== null) {
+        return (this.existingUser = true);
+      } else {
+        return (this.existingUser = false);
+      }
+    },
   },
   actions: {
     /* Gets Map Data for one User */
