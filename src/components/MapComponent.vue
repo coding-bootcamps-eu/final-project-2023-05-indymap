@@ -78,7 +78,7 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
-    dataStore.fetchMapPins(this.dataStore.currentMapId);
+    dataStore.fetchMapPins(dataStore.currentMapId);
 
     return {
       dataStore,
@@ -184,7 +184,7 @@ export default {
       for (let i = 0; i < this.notes.length; i++) {
         if (this.notes[i].id === e.target.options.id) {
           this.notePopupContent = this.notes[i];
-          this.dataStore.currentPin = this.notes[i].id;
+          this.dataStore.currentPinId = this.notes[i].id;
           break;
         }
       }
