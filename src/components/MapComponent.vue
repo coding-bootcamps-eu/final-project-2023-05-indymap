@@ -16,6 +16,12 @@
         />
       </div>
       <div class="search__input__wrapper" v-else>
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <p>Loading Data...</p>
       </div>
     </div>
@@ -68,7 +74,8 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
-    dataStore.fetchMapPins("7220e93a-804f-4c9e-880a-8e53e429c1b3");
+    /* Test ID "7220e93a-804f-4c9e-880a-8e53e429c1b3" */
+    dataStore.fetchMapPins(dataStore.currentMap);
 
     return {
       dataStore,
@@ -233,9 +240,11 @@ export default {
     currentLocation(newLocation) {
       this.map.setView([newLocation.lat, newLocation.lng], 13);
     },
-    notes() {
-      this.filterNotes();
-      this.addMarker();
+    notes(newNotes) {
+      if (newNotes) {
+        this.filterNotes();
+        this.addMarker();
+      }
     },
     filterValue() {
       this.filterNotes();
@@ -402,6 +411,42 @@ p {
 @media screen and (min-width: 625px) {
   .note__popup {
     max-width: 500px;
+  }
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  border: 2px solid black;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: black transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
