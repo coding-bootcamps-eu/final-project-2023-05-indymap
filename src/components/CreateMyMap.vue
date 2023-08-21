@@ -48,10 +48,15 @@ export default {
     };
   },
   methods: {
-    createNewMap(){
-    this.dataStore.createNewMap(this.mapTitle, this.mapDescription, localStorage.getItem("userID"))
+    createNewMap() {
+      this.dataStore.createNewMap(
+        this.mapTitle,
+        this.mapDescription,
+        localStorage.getItem("userID")
+      );
     },
-},
+  },
+};
 </script>
 
 <style scoped>
