@@ -11,6 +11,7 @@ export const useDataStore = defineStore("state", {
       newPinLocation: {},
     };
   },
+
   actions: {
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
@@ -46,7 +47,7 @@ export const useDataStore = defineStore("state", {
         );
     },
 
-    createNewMap(mapTitle, mapDescription, userID) {
+    createNewMap(mapTitle, mapDescription, mapViewLocation, userID) {
       fetch("https://23-mai.indymap.api.cbe.uber.space/maps", {
         method: "POST",
         headers: {
@@ -56,6 +57,7 @@ export const useDataStore = defineStore("state", {
           userId: userID,
           mapTitle: mapTitle,
           mapDescription: mapDescription,
+          mapViewLocation: mapViewLocation,
         }),
       })
         .then((response) => response.json())

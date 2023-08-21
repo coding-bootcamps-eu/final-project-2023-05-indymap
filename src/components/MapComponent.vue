@@ -78,7 +78,7 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
-    dataStore.fetchMapPins(this.dataStore.currentMapId);
+    dataStore.fetchMapPins(dataStore.currentMapId);
 
     return {
       dataStore,

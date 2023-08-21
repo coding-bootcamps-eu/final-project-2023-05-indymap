@@ -4,6 +4,7 @@
     <div class="input-group">
       <i class="fas fa-map-marker-alt"></i>
       <input type="text" v-model="mapTitle" placeholder="Enter Map Title" />
+      <small class="check"><p v-if="!mapTitle">Please enter a title</p></small>
     </div>
     <div class="input-group">
       <i class="fas fa-pen"></i>
@@ -12,26 +13,45 @@
         v-model="mapDescription"
         placeholder="Short Description"
       />
+      <small class="check"
+        ><p v-if="!mapDescription">Please enter a description</p></small
+      >
     </div>
     <div class="input-group">
       <i class="fas fa-location-arrow"></i>
-      <input type="text" v-model="userLocation" placeholder="Your Location" />
+      <input
+        type="text"
+        v-debounce:500ms="returnCoordinates"
+        v-model="mapLocation"
+        placeholder="Your Location"
+      />
+      <small class="check"
+        ><p v-if="!validCityName">Please enter a valid city name</p></small
+      >
     </div>
     <button
       @click="
-        createNewMap;
+        createNewMap();
         $router.push('/map');
       "
+      :disabled="
+        validCityName === false || mapTitle === '' || mapDescription === ''
+      "
     >
-      Go!
+      Create
     </button>
   </div>
 </template>
 
 <script>
 import { useDataStore } from "@/stores/useDataStore";
+import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { vue3Debounce } from "vue-debounce";
 
 export default {
+  directives: {
+    debounce: vue3Debounce({ lock: true }),
+  },
   setup() {
     const dataStore = useDataStore();
 
@@ -44,16 +64,33 @@ export default {
       mapTitle: "",
       mapLocation: "",
       mapDescription: "",
-      userLocation: "",
+      mapViewLocation: {},
+      validCityName: false,
     };
   },
+
   methods: {
     createNewMap() {
       this.dataStore.createNewMap(
         this.mapTitle,
         this.mapDescription,
+        this.mapViewLocation,
         localStorage.getItem("userID")
       );
+    },
+
+    returnCoordinates() {
+      const provider = new OpenStreetMapProvider();
+      provider.search({ query: this.mapLocation }).then((result) => {
+        if (result.length > 0) {
+          const { x, y } = result[0];
+          console.log(x);
+          this.mapViewLocation = { lat: y, lng: x };
+          this.validCityName = true;
+        } else {
+          this.validCityName = false;
+        }
+      });
     },
   },
 };
@@ -68,31 +105,36 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background-color: #f0f0f0;
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   background-color: #c4edd6;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  width: 80%;
   max-width: 400px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+
+  height: 100%;
 }
 
 .input-group {
-  margin-bottom: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  width: 100%;
 }
 
 .input-group i {
   margin-right: 10px;
+}
+
+.check p {
+  margin: 0;
+  margin-inline-start: 5px;
 }
 
 .input-group input {
@@ -117,7 +159,15 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+button:disabled {
+  background-color: grey;
+}
+
+button:hover:disabled {
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
   background-color: #338f5d;
 }
 
