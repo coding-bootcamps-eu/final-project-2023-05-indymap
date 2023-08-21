@@ -238,9 +238,11 @@ export default {
     currentLocation(newLocation) {
       this.map.setView([newLocation.lat, newLocation.lng], 13);
     },
-    notes() {
-      this.filterNotes();
-      this.addMarker();
+    notes(newNotes) {
+      if (newNotes) {
+        this.filterNotes();
+        this.addMarker();
+      }
     },
     filterValue() {
       this.filterNotes();
