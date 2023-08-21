@@ -32,7 +32,9 @@
           <p class="note__popup__text">
             {{ notePopupContent.description.substring(0, 50) }}
           </p>
-          <button class="details">Details</button>
+          <button class="details" @click="$router.push('/view-pin')">
+            Details
+          </button>
         </div>
         <button class="note__popup__close__button" @click="closeNotePopup">
           <img
@@ -55,7 +57,9 @@
         {{ contextMenuPosition.lat.toFixed(4) }},
         {{ contextMenuPosition.lng.toFixed(4) }}
       </p>
-      <button class="add__marker">Add Marker</button>
+      <button class="add__marker" @click="$router.push('/edit-pin')">
+        Add Marker
+      </button>
     </div>
   </div>
 </template>
@@ -213,6 +217,7 @@ export default {
       };
       this.contextMenuVisible = true;
       this.dataStore.newPinLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
+      this.dataStore.newPin = true;
 
       // Close the context menu when clicked outside
       document.addEventListener("click", this.closeContextMenu, { once: true });
