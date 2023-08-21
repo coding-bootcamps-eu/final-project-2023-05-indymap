@@ -15,23 +15,19 @@ export const useDataStore = defineStore("state", {
   actions: {
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
-      fetch(
-        `https://23-mai.indymap.api.cbe.uber.space/users/${userID}?_embed=maps`
-      )
+      fetch(`${process.env.VUE_APP_API_URL}/users/${userID}?_embed=maps`)
         .then((response) => response.json())
         .then((data) => (this.stateMaps = data));
     },
 
     fetchMapPins(mapID) {
-      fetch(
-        `https://23-mai.indymap.api.cbe.uber.space/maps/${mapID}?_embed=pins`
-      )
+      fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}?_embed=pins`)
         .then((response) => response.json())
         .then((data) => (this.statePins = data));
     },
 
     createNewUser(userName) {
-      fetch("https://23-mai.indymap.api.cbe.uber.space/users", {
+      fetch(`${process.env.VUE_APP_API_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +44,7 @@ export const useDataStore = defineStore("state", {
     },
 
     createNewMap(mapTitle, mapDescription, mapViewLocation, userID) {
-      fetch("https://23-mai.indymap.api.cbe.uber.space/maps", {
+      fetch(`${process.env.VUE_APP_API_URL}/maps`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,13 +61,13 @@ export const useDataStore = defineStore("state", {
     },
 
     deleteMap(mapID) {
-      fetch(`https://23-mai.indymap.api.cbe.uber.space/maps/${mapID}`, {
+      fetch(`${process.env.VUE_APP_API_URL}/maps/${mapID}`, {
         method: "DELETE",
       }).then((response) => response.json());
     },
 
     createNewPin(header, description, geoLocation, mapId) {
-      fetch("https://23-mai.indymap.api.cbe.uber.space/pins", {
+      fetch(`${process.env.VUE_APP_API_URL}/pins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +85,7 @@ export const useDataStore = defineStore("state", {
     },
 
     editPin(pinId, header, description, geoLocation, mapId) {
-      fetch(`https://23-mai.indymap.api.cbe.uber.space/pins/${pinId}`, {
+      fetch(`${process.env.VUE_APP_API_URL}/pins/${pinId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -106,7 +102,7 @@ export const useDataStore = defineStore("state", {
     },
 
     deletePin(pinID) {
-      fetch(`https://23-mai.indymap.api.cbe.uber.space/pins/${pinID}`, {
+      fetch(`${process.env.VUE_APP_API_URL}/pins/${pinID}`, {
         method: "DELETE",
       }).then((response) => response.json());
     },
