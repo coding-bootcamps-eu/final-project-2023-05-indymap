@@ -23,7 +23,7 @@ export const useDataStore = defineStore("state", {
 
     fetchMapPins(mapID) {
       fetch(
-        `hhttps://23-mai.indymap.api.cbe.uber.space/maps/${mapID}?_embed=pins`
+        `https://23-mai.indymap.api.cbe.uber.space/maps/${mapID}?_embed=pins`
       )
         .then((response) => response.json())
         .then((data) => (this.statePins = data));
