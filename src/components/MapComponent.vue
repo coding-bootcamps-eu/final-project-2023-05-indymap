@@ -78,6 +78,7 @@ import { useDataStore } from "@/stores/useDataStore";
 export default {
   setup() {
     const dataStore = useDataStore();
+
     dataStore.fetchMapPins(dataStore.currentMapId);
 
     return {
@@ -231,7 +232,6 @@ export default {
 
     closeContextMenu() {
       this.contextMenuVisible = false;
-      this.dataStore.newPinLocation = {};
     },
   },
   created() {
