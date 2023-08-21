@@ -17,12 +17,12 @@
         class="flavor-text-map"
         :map="dataStore.stateMaps"
         :key="map.id"
-        v-for="map in dataStore.stateMaps"
+        v-for="map in dataStore.stateMaps.maps"
       >
         <img src="https://picsum.photos/seed/picsum/100/100" alt="map" />
         <div class="heading-and-description">
-          <h2>{{ dataStore.stateMaps.mapTitle }}</h2>
-          <p>{{ dataStore.stateMaps.mapDescription }}</p>
+          <h2>{{ map.mapTitle }}</h2>
+          <p>{{ map.mapDescription }}</p>
           <button class="delete-button">Delete map</button>
         </div>
       </div>
