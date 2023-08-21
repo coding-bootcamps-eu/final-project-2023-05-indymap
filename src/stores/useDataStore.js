@@ -9,9 +9,18 @@ export const useDataStore = defineStore("state", {
       currentPinId: "9623d39d-55f4-434f-bd31-3c776952d7a4",
       newPin: false,
       newPinLocation: {},
+      existingUser: false,
     };
   },
-
+  getters: {
+    checkUser() {
+      if (localStorage.getItem("userID") !== null) {
+        return (this.existingUser = true);
+      } else {
+        return (this.existingUser = false);
+      }
+    },
+  },
   actions: {
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
@@ -27,7 +36,7 @@ export const useDataStore = defineStore("state", {
     },
 
     createNewUser(userName) {
-      fetch(`${process.env.VUE_APP_API_URL}/users`, {
+      return fetch(`${process.env.VUE_APP_API_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

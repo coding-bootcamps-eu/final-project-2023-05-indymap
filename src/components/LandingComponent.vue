@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="new-user-introduction">
+    <div v-if="dataStore.existingUser === false" class="new-user-introduction">
       <p>
         Welcome to Indymap new user. Please tell us your name so that we know
         who you are in the future.
@@ -8,18 +8,21 @@
       <form>
         <label for="username">Username</label
         ><input type="text" name="username" />
-        <button @click.prevent="dataStore.createNewUser('Testuser123')">
-          Submit
-        </button>
+        <button @click.prevent="newUserLink()">Submit</button>
       </form>
     </div>
-    <div>
+    <div v-else>
       <h1>Welcome back user, select your map to get started:</h1>
-      <div class="flavor-text-map">
+      <div
+        class="flavor-text-map"
+        :map="dataStore.stateMaps"
+        :key="map.id"
+        v-for="map in dataStore.stateMaps"
+      >
         <img src="https://picsum.photos/seed/picsum/100/100" alt="map" />
         <div class="heading-and-description">
-          <h2>Just a map</h2>
-          <p>Just a description</p>
+          <h2>{{ dataStore.stateMaps.mapTitle }}</h2>
+          <p>{{ dataStore.stateMaps.mapDescription }}</p>
           <button class="delete-button">Delete map</button>
         </div>
       </div>
@@ -34,10 +37,17 @@ export default {
   setup() {
     const dataStore = useDataStore();
 
-    console.log(dataStore);
     return {
       dataStore,
     };
+  },
+  methods: {
+    newUserLink() {
+      const userName = document.querySelector("input").value;
+      this.dataStore
+        .createNewUser(userName)
+        .then(() => this.$router.push("/new-map"));
+    },
   },
 };
 </script>
