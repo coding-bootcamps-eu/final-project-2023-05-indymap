@@ -8,16 +8,21 @@
       <div></div>
     </label>
     <nav id="menu">
-      <h2 class="nav__title">Map Overview</h2>
-      <ul class="map__list">
-        <li
-          v-for="map in dataStore.stateMaps.maps"
-          :key="map.id"
-          @click="loadDifferentMap(map.id)"
-        >
-          {{ map.mapTitle }}
-        </li>
-      </ul>
+      <div class="wrapper">
+        <h2 class="nav__title">Map Overview</h2>
+        <ul class="map__list">
+          <li
+            v-for="map in dataStore.stateMaps.maps"
+            :key="map.id"
+            @click="loadDifferentMap(map.id)"
+          >
+            {{ map.mapTitle }}
+          </li>
+        </ul>
+      </div>
+      <button class="back-to-home" @click="$router.push('/')">
+        Back to Main Menu
+      </button>
     </nav>
   </header>
 </template>
@@ -35,7 +40,7 @@ export default {
   methods: {
     loadDifferentMap(mapId) {
       this.dataStore.currentMapId = mapId;
-      this.$router.push("/map");
+      this.dataStore.fetchMapPins(mapId);
     },
   },
 };
@@ -57,6 +62,9 @@ header {
   cursor: pointer;
 }
 #menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   z-index: 8000;
   background: hsl(0, 0%, 20%);
   width: 50vmin;
@@ -110,7 +118,11 @@ header {
   transform: translateY(-15px) rotate(-45deg);
 }
 
-.nav__title,
+.nav__title {
+  font-size: 24px;
+  padding-inline: 2rem;
+}
+
 .map__list li {
   padding-inline-start: 2rem;
 }
@@ -134,5 +146,11 @@ header {
 
 .map__list li:hover {
   background: hsl(0, 0%, 30%);
+}
+
+.back-to-home {
+  padding-inline: 2rem;
+  padding-block: 0.5rem;
+  height: 3rem;
 }
 </style>

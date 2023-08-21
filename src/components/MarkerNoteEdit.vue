@@ -21,14 +21,12 @@
       ></textarea>
     </article>
     <div class="btn-wrapper">
-      <router-link class="router-link router-link-save-marker" to="/view-pin">
-        <button
-          @click="saveMarkerData(), $emit('pin-saved')"
-          class="btn-save-pin"
-        >
-          Save Marker
-        </button></router-link
+      <button
+        @click="saveMarkerData(), $emit('pin-saved')"
+        class="btn-save-pin"
       >
+        Save Marker
+      </button>
       <router-link class="router-link router-link-back-to-map" to="/map">
         <button class="btn-back-to-map">Back to map</button></router-link
       >
@@ -62,7 +60,7 @@ export default {
   },
   methods: {
     loadPinData() {
-      this.currentMapId = this.dataStore.stateMaps.maps[0].id;
+      this.currentMapId = this.dataStore.currentMapId;
       if (this.dataStore.newPin) {
         this.geoLocation = this.dataStore.newPinLocation;
       } else {
@@ -75,17 +73,17 @@ export default {
         this.geoLocation = currentPin[0].geoLocation;
       }
     },
-    saveMarkerData() {
+    async saveMarkerData() {
       if (this.dataStore.newPin) {
-        this.dataStore.createNewPin(
+        await this.dataStore.createNewPin(
           this.header,
           this.description,
           this.geoLocation,
           this.currentMapId
         );
-        this.dataStore.newPin = true;
+        this.dataStore.newPin = false;
       } else {
-        this.dataStore.editPin(
+        await this.dataStore.editPin(
           this.currentPinId,
           this.header,
           this.description,
@@ -93,7 +91,8 @@ export default {
           this.currentMapId
         );
       }
-      this.dataStore.fetchMapPins(this.dataStore.currentMapId);
+      await this.dataStore.fetchMapPins(this.dataStore.currentMapId);
+      this.$router.push("/view-pin");
     },
   },
 };
