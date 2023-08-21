@@ -5,8 +5,7 @@ export const useDataStore = defineStore("state", {
     return {
       stateMaps: {},
       statePins: {},
-      currentMap: "",
-      currentPin: "",
+      currentMapId: "",
       currentPinId: "",
       newPin: false,
       newPinLocation: {},
@@ -15,19 +14,23 @@ export const useDataStore = defineStore("state", {
   actions: {
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
-      fetch(`http://localhost:3000/users/${userID}?_embed=maps`)
+      fetch(
+        `https://23-mai.indymap.api.cbe.uber.space/users/${userID}?_embed=maps`
+      )
         .then((response) => response.json())
         .then((data) => (this.stateMaps = data));
     },
 
     fetchMapPins(mapID) {
-      fetch(`http://localhost:3000/maps/${mapID}?_embed=pins`)
+      fetch(
+        `https://23-mai.indymap.api.cbe.uber.space/maps/${mapID}?_embed=pins`
+      )
         .then((response) => response.json())
         .then((data) => (this.statePins = data));
     },
 
     createNewUser(userName) {
-      fetch("http://localhost:3000/users", {
+      fetch("https://23-mai.indymap.api.cbe.uber.space/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +47,7 @@ export const useDataStore = defineStore("state", {
     },
 
     createNewMap(mapTitle, mapDescription, userID) {
-      fetch("http://localhost:3000/maps", {
+      fetch("https://23-mai.indymap.api.cbe.uber.space/maps", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,13 +63,13 @@ export const useDataStore = defineStore("state", {
     },
 
     deleteMap(mapID) {
-      fetch(`http://localhost:3000/maps/${mapID}`, {
+      fetch(`https://23-mai.indymap.api.cbe.uber.space/maps/${mapID}`, {
         method: "DELETE",
       }).then((response) => response.json());
     },
 
     createNewPin(header, description, geoLocation, mapId) {
-      fetch("http://localhost:3000/pins", {
+      fetch("https://23-mai.indymap.api.cbe.uber.space/pins", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +87,7 @@ export const useDataStore = defineStore("state", {
     },
 
     editPin(pinId, header, description, geoLocation, mapId) {
-      fetch(`http://localhost:3000/pins/${pinId}`, {
+      fetch(`https://23-mai.indymap.api.cbe.uber.space/pins/${pinId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +104,7 @@ export const useDataStore = defineStore("state", {
     },
 
     deletePin(pinID) {
-      fetch(`http://localhost:3000/pins/${pinID}`, {
+      fetch(`https://23-mai.indymap.api.cbe.uber.space/pins/${pinID}`, {
         method: "DELETE",
       }).then((response) => response.json());
     },

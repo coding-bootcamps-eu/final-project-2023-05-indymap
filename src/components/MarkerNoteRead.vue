@@ -14,16 +14,30 @@
       <p class="marker-text">
         {{ this.description }}
       </p>
-      <router-link class="router-link router-link-edit-marker" to="/edit-pin"
-        ><button>Edit Marker</button></router-link
-      >
-
-      <router-link
-        @click="deletePinMethod()"
-        class="router-link router-link-delete-marker"
-        to="/map"
-        ><button>Delete Marker</button></router-link
-      >
+      <div class="btn-wrapper">
+        <button class="btn-delete-pin" @click="this.deleteModal = true">
+          Delete Pin
+        </button>
+        <router-link class="router-link router-link-edit-marker" to="/edit-pin"
+          ><button class="btn-edit-pin">Edit Pin</button></router-link
+        >
+        <div v-if="this.deleteModal" class="delete-pin-modal">
+          <p class="modal-text">Do you really want to delete this pin?</p>
+          <div class="btn-wrapper">
+            <button @click="this.deleteModal = false" class="btn-deny-delete">
+              Cancel
+            </button>
+            <router-link
+              @click="deletePinMethod()"
+              class="router-link router-link-delete-marker"
+              to="/map"
+              ><button class="btn-confirm-delete">
+                Delete Pin
+              </button></router-link
+            >
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -40,6 +54,7 @@ export default {
       currentPinId: "",
       currentMapId: "",
       geoLocation: {},
+      deleteModal: false,
     };
   },
   setup() {
@@ -48,16 +63,19 @@ export default {
       dataStore,
     };
   },
-  created() {
-    this.loadPinData();
+  async created() {
+    await this.loadPinData();
   },
 
   methods: {
     loadPinData() {
+      console.log(this.dataStore.statePins);
       this.currentPinId = this.dataStore.currentPinId;
+      console.log(this.currentPinId);
       const currentPin = this.dataStore.statePins.pins.filter(
         (pin) => pin.id === this.currentPinId
       );
+      console.log(currentPin[0]);
       this.currentMapId = this.dataStore.stateMaps.maps[0].id;
       this.geoLocation = currentPin[0].geoLocation;
       this.header = currentPin[0].header;
@@ -76,7 +94,20 @@ export default {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  --clr-btn-alert: rgb(252, 59, 0);
+  --clr-btn-alert-minor: rgb(248, 120, 81);
+  --clr-btn: rgb(54, 54, 54);
+  --clr-btn-hover: rgb(187, 187, 187);
+  --clr-btn-active: rgb(0, 0, 0);
+  --clr-background: white;
+  --clr-text: black;
+  --clr-icon-back-to-map: rgb(226, 255, 226);
 }
+html {
+  background-color: var(--clr-background);
+  color: var(--clr-text);
+}
+
 .marker-container {
   padding: 1.5rem 2rem;
   display: flex;
@@ -89,10 +120,26 @@ export default {
   align-self: flex-start;
 }
 .icon-left {
-  width: 1.5rem;
+  width: 2rem;
+  background-color: var(--clr-background);
+  border-radius: 90%;
+  transition: 150ms;
+}
+.icon-left:hover {
+  box-shadow: var(--clr-text) 0 0 2px;
+  background-color: var(--clr-icon-back-to-map);
+}
+.icon-left:active {
+  box-shadow: var(--clr-text) 0 0 2px;
+  background-color: var(--clr-icon-back-to-map);
+}
+.marker-headline {
+  margin-top: 2rem;
+  margin-inline: 2rem;
 }
 .marker-text {
   text-align: justify;
+  margin-inline: 2rem;
 }
 
 .router-link,
@@ -100,17 +147,64 @@ export default {
   color: black;
   text-decoration: none;
 }
-
-img {
-  width: 100%;
+.btn-delete-pin {
+  background-color: var(--clr-btn-alert-minor);
 }
+.delete-pin-modal {
+  border: 2px solid black;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  margin-inline: auto;
+  left: 3rem;
+  right: 3rem;
+  text-align: center;
+  top: 20%;
+  background: white;
+  border-radius: 0.5rem;
+  opacity: 100%;
+  transition: opacity 1s;
+}
+
+.btn-close-deletion-modal {
+  border-radius: 90%;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: none;
+  position: absolute;
+  align-self: flex-start;
+}
+.btn-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-items: center;
+}
+.btn-confirm-delete {
+  background-color: var(--clr-btn-alert);
+}
+
 button {
+  font-size: 1rem;
   color: white;
   font-weight: 700;
   width: 8rem;
-  height: 2rem;
-  border-radius: 10px;
+  height: 2.5rem;
+  border-radius: 7px;
   border: 0;
   background-color: rgb(148, 148, 148);
+  text-align: center;
+}
+
+button:hover {
+  background-color: var(--clr-btn-hover);
+  transition: 150ms;
+}
+
+button:active {
+  background-color: var(--clr-btn-active);
 }
 </style>
