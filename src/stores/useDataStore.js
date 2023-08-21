@@ -5,8 +5,8 @@ export const useDataStore = defineStore("state", {
     return {
       stateMaps: {},
       statePins: {},
-      currentMapId: "",
-      currentPinId: "",
+      currentMapId: "7220e93a-804f-4c9e-880a-8e53e429c1b3",
+      currentPinId: "9623d39d-55f4-434f-bd31-3c776952d7a4",
       newPin: false,
       newPinLocation: {},
     };
