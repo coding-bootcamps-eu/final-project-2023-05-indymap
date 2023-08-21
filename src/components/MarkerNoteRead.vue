@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="marker-container">
-      <router-link class="router-link router-link-map-view" to="/about">
+      <router-link class="router-link router-link-map-view" to="/map">
         <img
           class="icon-left"
           :src="require('@/assets/icons/arrow-left-circle.svg')"
