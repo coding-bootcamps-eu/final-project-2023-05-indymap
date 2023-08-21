@@ -1,5 +1,7 @@
 :root {
-  --main-bg-color: snow;
+  --main-bg-color: #a3c6b3;
+  --main-card-bg-clr: rgb(247, 247, 252);
+  --main-card-bg-clr-hover: rgb(245, 190, 139);
   --main-color: #a3c6b3;
   --main-accent-color: #52b788;
   --clr-btn-alert: rgb(252, 59, 0);
@@ -8,8 +10,14 @@
   --clr-btn-hover: rgb(187, 187, 187);
   --clr-btn-active: rgb(0, 0, 0);
   --clr-background: white;
-  --clr-text: black;
+  --clr-text: rgb(24, 24, 24);
   --clr-icon-back-to-map: rgb(226, 255, 226);
+
+  --clr-green-base: #99d4b2;
+  --clr-green-darker: #548769;
+  --clr-green-warmer: #ccd6a7;
+  --clr-orange-contrast: #fabd35;
+  --clr-blue-contrast: #74a8d6;
 }
 
 *,
@@ -23,10 +31,11 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  color: var(--clr-text);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
   background-color: var(--main-bg-color);
 }
 
@@ -34,4 +43,25 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+button {
+  font-size: 1rem;
+  color: white;
+  font-weight: 700;
+  width: 8rem;
+  height: 2.5rem;
+  border-radius: 7px;
+  border: 0;
+  background-color: var(--clr-btn);
+  text-align: center;
+}
+
+button:hover {
+  background-color: var(--clr-btn-hover);
+  transition: 150ms;
+}
+
+button:active {
+  background-color: var(--clr-btn-active);
 }

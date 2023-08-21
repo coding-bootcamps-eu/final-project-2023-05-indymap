@@ -52,6 +52,8 @@ header {
   align-items: center;
   border-bottom: 1px solid #eee;
   height: 4rem;
+  padding-inline: 1rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 .title {
