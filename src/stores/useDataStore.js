@@ -25,7 +25,7 @@ export const useDataStore = defineStore("state", {
     },
 
     createNewUser(userName) {
-      fetch("http://localhost:3000/users", {
+      return fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
