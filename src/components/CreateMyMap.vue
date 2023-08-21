@@ -3,50 +3,55 @@
     <h1 class="title">Indymap</h1>
     <div class="input-group">
       <i class="fas fa-map-marker-alt"></i>
-      <input
-        type="text"
-        v-model="mapLocation"
-        placeholder="Ort auf Google Maps"
-      />
+      <input type="text" v-model="mapTitle" placeholder="Enter Map Title" />
     </div>
     <div class="input-group">
       <i class="fas fa-pen"></i>
-      <input type="text" v-model="note" placeholder="Kurzbeschreibung" />
+      <input
+        type="text"
+        v-model="mapDescription"
+        placeholder="Short Description"
+      />
     </div>
     <div class="input-group">
       <i class="fas fa-location-arrow"></i>
-      <input type="text" v-model="userLocation" placeholder="Dein Standort" />
+      <input type="text" v-model="userLocation" placeholder="Your Location" />
     </div>
-    <button @click="createMap">Go!</button>
+    <button
+      @click="
+        createNewMap;
+        $router.push('/map');
+      "
+    >
+      Go!
+    </button>
   </div>
 </template>
 
 <script>
+import { useDataStore } from "@/stores/useDataStore";
+
 export default {
+  setup() {
+    const dataStore = useDataStore();
+
+    return {
+      dataStore,
+    };
+  },
   data() {
     return {
+      mapTitle: "",
       mapLocation: "",
-      note: "",
+      mapDescription: "",
       userLocation: "",
     };
   },
   methods: {
-    createMap() {
-      // der Code für das Erstellen der Karte
-      const apiUrl = "http://localhost:3000/maps";
-
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          // Code, um die empfangenen Daten zu verarbeiten und anzuzeigen
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Fehler beim Abrufen der Daten:", error);
-        });
+    createNewMap(){
+    this.dataStore.createNewMap(this.mapTitle, this.mapDescription, localStorage.getItem("userID"))
     },
-  },
-};
+},
 </script>
 
 <style scoped>
