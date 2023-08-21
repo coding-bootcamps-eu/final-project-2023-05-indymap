@@ -16,7 +16,7 @@ export const useDataStore = defineStore("state", {
   getters: {
     checkUser() {
       if (localStorage.getItem("userID") !== null) {
-        this.userId = localStorage.getItem("userID");
+        this.userId = JSON.parse(localStorage.getItem("userID"));
         return (this.existingUser = true);
       } else {
         return (this.existingUser = false);
@@ -68,7 +68,7 @@ export const useDataStore = defineStore("state", {
         }),
       })
         .then((response) => response.json())
-        .then((data) => (this.currentMap = data.id));
+        .then((data) => (this.currentMapId = data.id));
     },
 
     deleteMap(mapID) {

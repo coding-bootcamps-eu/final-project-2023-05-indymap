@@ -30,10 +30,7 @@
       >
     </div>
     <button
-      @click="
-        createNewMap();
-        $router.push('/map');
-      "
+      @click="createNewMap"
       :disabled="
         validCityName === false || mapTitle === '' || mapDescription === ''
       "
@@ -70,13 +67,15 @@ export default {
   },
 
   methods: {
-    createNewMap() {
-      this.dataStore.createNewMap(
+    async createNewMap() {
+      await this.dataStore.createNewMap(
         this.mapTitle,
         this.mapDescription,
         this.mapViewLocation,
-        localStorage.getItem("userID")
+        this.dataStore.userId
       );
+      await this.dataStore.fetchUserMaps(this.dataStore.userId);
+      this.$router.push("/map");
     },
 
     returnCoordinates() {
@@ -97,17 +96,6 @@ export default {
 </script>
 
 <style scoped>
-/*kompletter CSS-Code  */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
-}
-
 .container {
   display: flex;
   flex-direction: column;
