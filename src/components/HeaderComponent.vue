@@ -54,6 +54,7 @@ header {
   height: 4rem;
   padding-inline: 1rem;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: var(--header-bg-color);
 }
 
 .title {

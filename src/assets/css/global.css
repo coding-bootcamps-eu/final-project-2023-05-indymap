@@ -1,5 +1,6 @@
 :root {
-  --main-bg-color: #a3c6b3;
+  --main-bg-color: #c4edd6;
+  --header-bg-color: #63da96;
   --main-card-bg-clr: rgb(247, 247, 252);
   --main-card-bg-clr-hover: rgb(245, 190, 139);
   --main-color: #a3c6b3;
@@ -43,25 +44,4 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-}
-
-button {
-  font-size: 1rem;
-  color: white;
-  font-weight: 700;
-  width: 8rem;
-  height: 2.5rem;
-  border-radius: 7px;
-  border: 0;
-  background-color: var(--clr-btn);
-  text-align: center;
-}
-
-button:hover {
-  background-color: var(--clr-btn-hover);
-  transition: 150ms;
-}
-
-button:active {
-  background-color: var(--clr-btn-active);
 }

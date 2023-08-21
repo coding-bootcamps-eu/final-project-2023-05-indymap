@@ -92,14 +92,6 @@ export default {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  --clr-btn-alert: rgb(252, 59, 0);
-  --clr-btn-alert-minor: rgb(248, 120, 81);
-  --clr-btn: rgb(54, 54, 54);
-  --clr-btn-hover: rgb(187, 187, 187);
-  --clr-btn-active: rgb(0, 0, 0);
-  --clr-background: white;
-  --clr-text: black;
-  --clr-icon-back-to-map: rgb(226, 255, 226);
 }
 html {
   background-color: var(--clr-background);
@@ -107,11 +99,15 @@ html {
 }
 
 .marker-container {
+  border-radius: 5px;
+  box-shadow: rgb(173, 173, 173) 0 0 5px 2px;
+  margin: 2rem;
   padding: 1.5rem 2rem;
   display: flex;
   gap: 1.5rem;
   flex-direction: column;
   align-items: center;
+  background-color: var(--main-card-bg-clr);
 }
 .router-link-map-view {
   position: absolute;
@@ -137,7 +133,7 @@ html {
 }
 .marker-text {
   text-align: justify;
-  margin-inline: 2rem;
+  margin-bottom: 1rem;
 }
 
 .router-link,
@@ -189,7 +185,7 @@ button {
   font-size: 1rem;
   color: white;
   font-weight: 700;
-  width: 8rem;
+  width: 7em;
   height: 2.5rem;
   border-radius: 7px;
   border: 0;

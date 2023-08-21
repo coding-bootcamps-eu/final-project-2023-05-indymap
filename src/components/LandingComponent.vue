@@ -141,6 +141,27 @@ h2 {
   font-size: 1rem;
 }
 
+button {
+  font-size: 1rem;
+  color: white;
+  font-weight: 700;
+  min-width: min-content;
+  height: 2.5rem;
+  border-radius: 7px;
+  border: 0;
+  background-color: var(--clr-btn);
+  text-align: center;
+}
+
+button:hover {
+  background-color: var(--clr-btn-hover);
+  transition: 150ms;
+}
+
+button:active {
+  background-color: var(--clr-btn-active);
+}
+
 .landing-page {
   height: 100%;
 }
