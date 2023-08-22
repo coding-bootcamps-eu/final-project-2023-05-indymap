@@ -140,9 +140,10 @@ html {
 }
 .marker-headline {
   margin-inline: 2rem;
+  text-align: center;
 }
 .marker-text {
-  text-align: justify;
+  text-align: center;
   margin-bottom: 1rem;
   background-color: var(--card-bg-accent-clr);
   border-radius: 5px;

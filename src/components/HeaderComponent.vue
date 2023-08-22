@@ -53,7 +53,7 @@ header {
   /* border-bottom: 1px solid #eee; */
   height: 5rem;
   padding-inline: 1rem;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: var(--font-header);
   background-color: var(--header-bg-color);
 }
 
