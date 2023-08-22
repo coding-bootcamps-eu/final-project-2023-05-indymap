@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="title">IndyMap</h1>
+    <h1 class="title" @click="logoLink(mapId)">IndyMap</h1>
     <input type="checkbox" id="burgerMenu" />
     <label id="burger" for="burgerMenu">
       <div></div>
@@ -39,8 +39,12 @@ export default {
   },
   methods: {
     loadDifferentMap(mapId) {
-      this.dataStore.currentMapId = mapId;
+      this.$router.push({ name: "map", params: { id: mapId } });
+      /*       this.dataStore.currentMapId = mapId; */
       this.dataStore.fetchMapPins(mapId);
+    },
+    logoLink(mapId) {
+      this.$router.push({ name: "map", params: { id: mapId } });
     },
   },
 };

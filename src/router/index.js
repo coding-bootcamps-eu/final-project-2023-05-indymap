@@ -18,7 +18,7 @@ const routes = [
     component: PinView,
   },
   {
-    path: "/map",
+    path: "/map/:id",
     name: "map",
     component: MapView,
   },
