@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="search__wrapper">
-      <div class="search__input__wrapper" v-if="markers.length">
+      <div class="search__input__wrapper" v-if="notes.length">
         <div class="search__icon">
           <img
             :src="require('@/assets/icons/search-icon.svg')"
@@ -15,8 +15,8 @@
           placeholder="Filter your Pins"
         />
       </div>
-      <div class="search__input__wrapper" v-else-if="!markers.length">
-        <p>Create your first pin!</p>
+      <div class="search__input__wrapper" v-else-if="!notes.length">
+        <p>Create your first marker!</p>
       </div>
       <div class="search__input__wrapper" v-else>
         <div class="lds-ring">
@@ -296,6 +296,7 @@ export default {
     },
     "$route.params.id": {
       async handler() {
+        this.dataStore.currentMapId = this.$route.params.id;
         await this.dataStore.fetchMapPins(this.$route.params.id);
         this.map.setView([
           this.dataStore.statePins.mapViewLocation.lat,
