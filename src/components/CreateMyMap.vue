@@ -150,12 +150,14 @@ export default {
 }
 
 button {
-  background-color: #52b788;
-  color: #fff;
+  background-color: var(--clr-btn);
+  color: var(--main-card-bg-clr);
   border: none;
   padding: 15px;
+  height: 2.75rem;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 1rem;
+  font-weight: 600;
   width: 10rem;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -171,7 +173,7 @@ button:hover:disabled {
 }
 
 button:hover:not(:disabled) {
-  background-color: #338f5d;
+  background-color: var(--clr-btn-hover);
 }
 
 @media (min-width: 768px) {
