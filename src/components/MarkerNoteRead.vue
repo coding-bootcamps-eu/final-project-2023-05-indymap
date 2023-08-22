@@ -1,42 +1,40 @@
 <template>
-  <div>
-    <section class="marker-container">
-      <router-link class="router-link router-link-map-view" to="/map">
-        <img
-          class="icon-left"
-          :src="require('@/assets/icons/arrow-left-circle.svg')"
-          alt="arrow pointing left"
-      /></router-link>
-      <div class="note-content-wrapper">
-        <h2 class="marker-headline">
-          {{ this.header }}
-        </h2>
-        <p class="marker-text">
-          {{ this.description }}
-        </p>
-      </div>
+  <section class="marker-container">
+    <router-link class="router-link router-link-map-view" to="/map">
+      <img
+        class="icon-left"
+        :src="require('@/assets/icons/arrow-left-circle.svg')"
+        alt="arrow pointing left"
+    /></router-link>
+    <div class="note-content-wrapper">
+      <h2 class="marker-headline">
+        {{ this.header }}
+      </h2>
+      <p class="marker-text">
+        {{ this.description }}
+      </p>
+    </div>
 
-      <div class="btn-wrapper">
-        <button class="btn-delete-pin" @click="this.deleteModal = true">
-          Delete Pin
-        </button>
-        <router-link class="router-link router-link-edit-marker" to="/edit-pin"
-          ><button class="btn-edit-pin">Edit Pin</button></router-link
-        >
-        <div v-if="this.deleteModal" class="delete-pin-modal">
-          <p class="modal-text">Do you really want to delete this pin?</p>
-          <div class="btn-wrapper">
-            <button @click="this.deleteModal = false" class="btn-deny-delete">
-              Cancel
-            </button>
-            <button @click="deletePinMethod" class="btn-confirm-delete">
-              Delete Pin
-            </button>
-          </div>
+    <div class="btn-wrapper">
+      <button class="btn-delete-pin" @click="this.deleteModal = true">
+        Delete Pin
+      </button>
+      <router-link class="router-link router-link-edit-marker" to="/edit-pin"
+        ><button class="btn-edit-pin">Edit Pin</button></router-link
+      >
+      <div v-if="this.deleteModal" class="delete-pin-modal">
+        <p class="modal-text">Do you really want to delete this pin?</p>
+        <div class="btn-wrapper">
+          <button @click="this.deleteModal = false" class="btn-deny-delete">
+            Cancel
+          </button>
+          <button @click="deletePinMethod" class="btn-confirm-delete">
+            Delete Pin
+          </button>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -67,13 +65,12 @@ export default {
 
   methods: {
     loadPinData() {
-      /* console.log(this.dataStore.statePins); */
       this.currentPinId = this.dataStore.currentPinId;
-      // console.log(this.currentPinId);
+
       const currentPin = this.dataStore.statePins.pins.filter(
         (pin) => pin.id === this.currentPinId
       );
-      /* console.log(currentPin); */
+
       this.currentMapId = this.dataStore.currentMapId;
       this.header = currentPin[0].header;
       this.geoLocation = currentPin[0].geoLocation;

@@ -2,18 +2,26 @@
   <main class="landing-page">
     <div v-if="dataStore.existingUser === false" class="wrapper">
       <p class="welcome-msg-new-user">
-        Welcome to Indymap new user. Please tell us your name so that we know
-        who you are in the future.
+        Welcome to Indymap!<br />
+        Please, tell us your name to get started.
       </p>
       <form>
         <label for="username">Username</label
         ><input
           type="text"
-          v-model="userName"
+          v-model.trim="userName"
           name="username"
           class="username-input"
+          required
         />
-        <button @click.prevent="newUserLink">Submit</button>
+        <small class="check"
+          ><p :style="{ visibility: !inputValidation ? 'visible' : 'hidden' }">
+            Username must be min. 5 characters long
+          </p></small
+        >
+        <button class="submit-button" @click.prevent="newUserLink">
+          Submit
+        </button>
       </form>
     </div>
     <div class="wrapper" v-else>
@@ -35,8 +43,8 @@
             alt="map"
           />
           <div class="heading-and-description">
-            <h2>{{ map.mapTitle }}</h2>
-            <p>{{ map.mapDescription }}</p>
+            <h2 class="map-title">{{ map.mapTitle }}</h2>
+            <p class="map-description">{{ map.mapDescription }}</p>
             <button
               class="delete-button"
               @click.stop="
@@ -92,6 +100,7 @@ export default {
       userName: "",
       deleteModal: false,
       mapToDelete: "",
+      inputValidation: false,
     };
   },
   methods: {
@@ -109,6 +118,12 @@ export default {
       await this.dataStore.deleteMap(mapId);
       await this.dataStore.fetchUserMaps(this.dataStore.userId);
       this.$router.push("/");
+    },
+  },
+
+  watch: {
+    userName(newUserName) {
+      this.inputValidation = newUserName.length > 5;
     },
   },
 };
@@ -137,11 +152,18 @@ form {
 h1 {
   font-weight: 500;
 }
-h2 {
+
+.map-title {
   font-size: 1rem;
+  margin: 0;
 }
 
-button {
+.map-description {
+  margin: 0;
+  margin-top: 0.7rem;
+}
+
+.submit-button {
   font-size: 1rem;
   color: white;
   font-weight: 700;
@@ -151,6 +173,8 @@ button {
   border: 0;
   background-color: var(--clr-btn);
   text-align: center;
+
+  margin-top: 1rem;
 }
 
 button:hover {
@@ -175,7 +199,6 @@ button:active {
 .username-input {
   border-radius: 5px;
   padding: 0.5rem;
-  margin-bottom: 1rem;
 }
 
 .welcome-message,
@@ -210,7 +233,7 @@ button:active {
   position: relative;
   display: flex;
   height: 10rem;
-  max-height: 18%;
+  max-height: 20%;
   border-radius: 10px;
   background-color: var(--main-card-bg-clr);
   box-shadow: 0px 0px 5px 2px hsla(0, 0%, 50%, 0.3);
@@ -223,7 +246,7 @@ button:active {
 }
 
 .heading-and-description {
-  padding-inline: 1.5rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -238,8 +261,8 @@ button:active {
   border: none;
   background: transparent;
 
-  bottom: 1rem;
-  right: 0rem;
+  bottom: 0.2rem;
+  right: 0.2rem;
 }
 
 .add-new-map-button {
@@ -321,5 +344,9 @@ button:active {
 .btn-confirm-delete:active,
 .btn-deny-delete:active {
   background-color: var(--clr-btn-active);
+}
+
+.check p {
+  margin: 0;
 }
 </style>

@@ -1,29 +1,6 @@
 <template>
   <header>
     <h1 class="title">IndyMap</h1>
-    <input type="checkbox" id="burgerMenu" />
-    <label id="burger" for="burgerMenu">
-      <div></div>
-      <div></div>
-      <div></div>
-    </label>
-    <nav id="menu">
-      <div class="wrapper">
-        <h2 class="nav__title">Map Overview</h2>
-        <ul class="map__list">
-          <li
-            v-for="map in dataStore.stateMaps.maps"
-            :key="map.id"
-            @click="loadDifferentMap(map.id)"
-          >
-            {{ map.mapTitle }}
-          </li>
-        </ul>
-      </div>
-      <button class="back-to-home" @click="$router.push('/')">
-        Back to Main Menu
-      </button>
-    </nav>
   </header>
 </template>
 
@@ -50,16 +27,15 @@ export default {
 header {
   display: flex;
   align-items: center;
-  /* border-bottom: 1px solid #eee; */
+  border-bottom: 1px solid #eee;
   height: 5rem;
   padding-inline: 1rem;
-  font-family: var(--font-header);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   background-color: var(--header-bg-color);
 }
 
 .title {
   margin: 0;
-  color: var(--clr-text-header);
 }
 
 .burger-wrapper {
@@ -70,7 +46,7 @@ header {
   flex-direction: column;
   justify-content: space-between;
   z-index: 8000;
-  background: var(--clr-green-darker);
+  background: hsl(0, 0%, 20%);
   width: 50vmin;
   height: 100%;
   position: fixed;
@@ -153,17 +129,8 @@ header {
 }
 
 .back-to-home {
-  font-size: 1rem;
-  color: white;
-  font-weight: 700;
-  width: 80%;
-  height: 2.5rem;
-  border-radius: 7px;
-  border: none;
-  background-color: var(--clr-btn);
-  text-align: center;
-
-  margin-block: 1rem;
-  margin-inline: auto;
+  padding-inline: 2rem;
+  padding-block: 0.5rem;
+  height: 3rem;
 }
 </style>

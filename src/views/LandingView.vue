@@ -1,13 +1,13 @@
 <template>
-  <HeaderComponent />
+  <BlankHeaderComponent />
   <LandingComponent />
 </template>
 <script>
 import LandingComponent from "@/components/LandingComponent.vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
+import BlankHeaderComponent from "@/components/BlankHeaderComponent.vue";
 export default {
   components: {
-    HeaderComponent,
+    BlankHeaderComponent,
     LandingComponent,
   },
 };
