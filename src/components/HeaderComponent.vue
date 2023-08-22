@@ -1,7 +1,7 @@
 <template>
-  <header>
-    <h1 class="title" @click="logoLink(mapId)">IndyMap</h1>
-    <input type="checkbox" id="burgerMenu" />
+  <header ref="targetElement">
+    <h1 class="title" @click="backToHome()">IndyMap</h1>
+    <input type="checkbox" id="burgerMenu" v-model="checkboxChecked" />
     <label id="burger" for="burgerMenu">
       <div></div>
       <div></div>
@@ -15,6 +15,7 @@
             v-for="map in dataStore.stateMaps.maps"
             :key="map.id"
             @click="loadDifferentMap(map.id)"
+            :class="{ active: map.id === dataStore.currentMapId }"
           >
             {{ map.mapTitle }}
           </li>
@@ -29,6 +30,7 @@
 
 <script>
 import { useDataStore } from "@/stores/useDataStore";
+
 export default {
   setup() {
     const dataStore = useDataStore();
@@ -37,15 +39,46 @@ export default {
       dataStore,
     };
   },
+  data() {
+    return {
+      checkboxChecked: false,
+    };
+  },
   methods: {
+    toggleBurgerMenu() {
+      if (this.checkboxChecked === true) {
+        this.checkboxChecked = false;
+      } else if (this.checkboxChecked === false) {
+        this.checkboxChecked = true;
+      }
+    },
+
+    closeBurgerMenu() {
+      this.checkboxChecked = false;
+    },
+
     loadDifferentMap(mapId) {
       this.$router.push({ name: "map", params: { id: mapId } });
       /*       this.dataStore.currentMapId = mapId; */
       this.dataStore.fetchMapPins(mapId);
+      this.toggleBurgerMenu();
     },
-    logoLink(mapId) {
-      this.$router.push({ name: "map", params: { id: mapId } });
+
+    backToHome() {
+      this.$router.push("/");
     },
+    handleClickOutside(event) {
+      const targetElement = this.$refs.targetElement;
+      if (!targetElement.contains(event.target)) {
+        this.closeBurgerMenu();
+      }
+    },
+  },
+  mounted() {
+    document.addEventListener("click", this.handleClickOutside);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.handleClickOutside);
   },
 };
 </script>
@@ -64,6 +97,11 @@ header {
 .title {
   margin: 0;
   color: var(--clr-text-header);
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--main-accent-color);
 }
 
 .burger-wrapper {
@@ -153,7 +191,7 @@ header {
 }
 
 .map__list li:hover {
-  background: hsl(0, 0%, 30%);
+  background: var(--main-accent-color);
 }
 
 .back-to-home {

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="title">IndyMap</h1>
+    <h1 class="title" @click="backToHome()">IndyMap</h1>
   </header>
 </template>
 
@@ -18,6 +18,9 @@ export default {
     loadDifferentMap(mapId) {
       this.dataStore.currentMapId = mapId;
       this.dataStore.fetchMapPins(mapId);
+    },
+    backToHome() {
+      this.$router.push("/");
     },
   },
 };

@@ -32,7 +32,10 @@
       <h1 class="welcome-message">
         <span>Welcome back</span
         ><span class="text-username">{{ dataStore.stateMaps.name }}.</span>
-        <span>Select your map to get started:</span>
+        <span v-if="this.dataStore.stateMaps.maps.length"
+          >Select your map to get started:</span
+        >
+        <span v-else>Create your first map to get started!</span>
       </h1>
       <div class="card-container">
         <div
@@ -148,6 +151,7 @@ html {
 main {
   margin: 0;
   background-color: var(--main-bg-color);
+  margin-bottom: 2rem;
 }
 
 form {
@@ -235,13 +239,13 @@ button:active {
   width: 80%;
   height: 100%;
   background-color: var(--main-bg-color);
+  margin-bottom: 2rem;
 }
 
 .flavor-text-map {
   position: relative;
   display: flex;
-  height: 10rem;
-  max-height: 20%;
+  max-height: 150px;
   border-radius: 10px;
   background-color: var(--main-card-bg-clr);
   box-shadow: 0px 0px 5px 2px hsla(0, 0%, 50%, 0.3);
@@ -261,7 +265,8 @@ button:active {
 
 .map-image {
   border-radius: 10px 0 0 10px;
-  object-fit: contain;
+  object-fit: cover;
+  max-width: 20%;
 }
 .delete-icon {
   width: 1rem;
@@ -285,27 +290,24 @@ button:active {
 .add-new-map-button {
   border: none;
   background: transparent;
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  position: fixed;
+  bottom: 0.5rem;
+  right: 0.5rem;
   z-index: 10;
   border-radius: 90%;
 }
 .add-new-map-button:hover {
-  background: transparent;
+  background-color: transparent;
 }
 
 .add-new-map-icon {
   width: 48px;
   height: 48px;
-  background-color: transparent;
+  background-color: var(--clr-background);
   border-radius: 90%;
   transition: background-color 100ms ease;
 }
 
-.add-new-map-icon:hover {
-  background-color: var(--header-bg-color);
-}
 .delete-map-modal {
   box-shadow: var(--clr-text) 0 0 5px 0px;
   padding: 2rem;
@@ -382,5 +384,11 @@ button:active {
 
 .check p {
   margin: 0;
+}
+
+@media screen and (min-width: 625px) {
+  .card-container {
+    max-width: 500px;
+  }
 }
 </style>
