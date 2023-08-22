@@ -15,7 +15,7 @@ export const useDataStore = defineStore("state", {
   },
   getters: {
     checkUser() {
-      if (localStorage.getItem("userID") !== null) {
+      if (localStorage.getItem("userID")) {
         this.userId = JSON.parse(localStorage.getItem("userID"));
         return (this.existingUser = true);
       } else {
@@ -49,9 +49,10 @@ export const useDataStore = defineStore("state", {
         }),
       })
         .then((response) => response.json())
-        .then((data) =>
-          localStorage.setItem("userID", JSON.stringify(data.id))
-        );
+        .then((data) => {
+          localStorage.setItem("userID", JSON.stringify(data.id));
+          this.userId = data.id;
+        });
     },
 
     createNewMap(mapTitle, mapDescription, mapViewLocation, userID) {

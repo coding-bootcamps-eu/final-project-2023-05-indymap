@@ -23,7 +23,7 @@
         type="text"
         v-debounce:500ms="returnCoordinates"
         v-model="mapLocation"
-        placeholder="Your Location"
+        placeholder="Location"
       />
       <small class="check"
         ><p v-if="!validCityName">Please enter a valid city name</p></small
@@ -83,7 +83,6 @@ export default {
       provider.search({ query: this.mapLocation }).then((result) => {
         if (result.length > 0) {
           const { x, y } = result[0];
-          console.log(x);
           this.mapViewLocation = { lat: y, lng: x };
           this.validCityName = true;
         } else {
