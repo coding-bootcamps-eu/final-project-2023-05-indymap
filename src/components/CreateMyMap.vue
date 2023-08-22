@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Create a new map</h1>
+    <h1 class="title">Create your map</h1>
     <div class="input-group">
       <i class="fas fa-map-marker-alt"></i>
       <input type="text" v-model="mapTitle" placeholder="Enter Map Title" />
@@ -104,12 +104,16 @@ export default {
   padding: 1rem;
   /* border-radius: 20px; */
   /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
-
+  align-content: center;
   min-width: 350px;
   max-width: 800px;
   height: 100%;
 }
-
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-family: var(--font-header);
+}
 .input-group {
   display: flex;
   flex-direction: column;
@@ -144,9 +148,10 @@ button {
   padding: 15px;
   border-radius: 10px;
   font-size: 18px;
-  width: 100%;
+  width: 10rem;
   cursor: pointer;
   transition: background-color 0.3s;
+  align-self: center;
 }
 
 button:disabled {

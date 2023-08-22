@@ -7,13 +7,15 @@
           :src="require('@/assets/icons/arrow-left-circle.svg')"
           alt="arrow pointing left"
       /></router-link>
+      <div class="note-content-wrapper">
+        <h2 class="marker-headline">
+          {{ this.header }}
+        </h2>
+        <p class="marker-text">
+          {{ this.description }}
+        </p>
+      </div>
 
-      <h2 class="marker-headline">
-        {{ this.header }}
-      </h2>
-      <p class="marker-text">
-        {{ this.description }}
-      </p>
       <div class="btn-wrapper">
         <button class="btn-delete-pin" @click="this.deleteModal = true">
           Delete Pin
@@ -100,7 +102,7 @@ html {
 
 .marker-container {
   border-radius: 5px;
-  box-shadow: rgb(173, 173, 173) 0 0 5px 2px;
+  /* box-shadow: var(--clr-text) 0 0 3px; */
   margin: 2rem;
   padding: 1.5rem 2rem;
   display: flex;
@@ -115,25 +117,38 @@ html {
 }
 .icon-left {
   width: 2rem;
-  background-color: var(--clr-background);
+  background-color: none;
   border-radius: 90%;
   transition: 150ms;
 }
 .icon-left:hover {
   box-shadow: var(--clr-text) 0 0 2px;
-  background-color: var(--clr-icon-back-to-map);
+  background-color: var(--header-bg-color);
 }
 .icon-left:active {
   box-shadow: var(--clr-text) 0 0 2px;
   background-color: var(--clr-icon-back-to-map);
 }
+.note-content-wrapper {
+  padding-inline: 0.5rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  width: 100%;
+}
 .marker-headline {
-  margin-top: 2rem;
   margin-inline: 2rem;
+  text-align: center;
 }
 .marker-text {
-  text-align: justify;
+  text-align: center;
   margin-bottom: 1rem;
+  background-color: var(--card-bg-accent-clr);
+  border-radius: 5px;
+  padding: 1rem;
+  width: 100%;
 }
 
 .router-link,
@@ -145,7 +160,7 @@ html {
   background-color: var(--clr-btn-alert-minor);
 }
 .delete-pin-modal {
-  box-shadow: black 0 0 5px 1px;
+  box-shadow: var(--clr-text) 0 0 5px 0px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -157,7 +172,7 @@ html {
   right: 3rem;
   text-align: center;
   top: 30%;
-  background: white;
+  background: var(--main-card-bg-clr);
   border-radius: 0.5rem;
   opacity: 100%;
   transition: opacity 1s;
@@ -183,9 +198,9 @@ html {
 
 button {
   font-size: 1rem;
-  color: white;
+  color: var(--clr-background);
   font-weight: 700;
-  width: 7em;
+  width: 7rem;
   height: 2.5rem;
   border-radius: 7px;
   border: 0;

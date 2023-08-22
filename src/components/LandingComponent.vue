@@ -219,7 +219,7 @@ button:active {
 
 .flavor-text-map:hover {
   background-color: var(--main-card-bg-clr-hover);
-  box-shadow: 0px 0px 10px 2px hsla(0, 0%, 50%, 0.575);
+  box-shadow: 0px 0px 7px 0px var(--header-bg-color);
 }
 
 .heading-and-description {
