@@ -27,7 +27,7 @@ export default {
 header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #eee;
+  /* border-bottom: 1px solid #eee; */
   height: 5rem;
   padding-inline: 1rem;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -36,6 +36,7 @@ header {
 
 .title {
   margin: 0;
+  color: var(--clr-text-header);
 }
 
 .burger-wrapper {
