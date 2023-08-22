@@ -3,8 +3,15 @@
     <h1 class="title">Create your map</h1>
     <div class="input-group">
       <i class="fas fa-map-marker-alt"></i>
-      <input type="text" v-model="mapTitle" placeholder="Enter Map Title" />
-      <small class="check"><p v-if="!mapTitle">Please enter a title</p></small>
+      <input
+        type="text"
+        v-model="mapTitle"
+        placeholder="Enter Map Title"
+        id="map-title"
+      />
+      <small class="check"
+        ><label for="map-title">Please enter a title</label></small
+      >
     </div>
     <div class="input-group">
       <i class="fas fa-pen"></i>
@@ -12,9 +19,10 @@
         type="text"
         v-model="mapDescription"
         placeholder="Short Description"
+        id="map-description"
       />
       <small class="check"
-        ><p v-if="!mapDescription">Please enter a description</p></small
+        ><label for="map-description">Please enter a description</label></small
       >
     </div>
     <div class="input-group">
@@ -24,9 +32,10 @@
         v-debounce:500ms="returnCoordinates"
         v-model="mapLocation"
         placeholder="Location"
+        id="map-location"
       />
       <small class="check"
-        ><p v-if="!validCityName">Please enter a valid city name</p></small
+        ><label for="map-location">Please enter a valid city name</label></small
       >
     </div>
     <button
@@ -130,7 +139,7 @@ export default {
   margin-right: 10px;
 }
 
-.check p {
+.check label {
   margin: 0;
   margin-inline-start: 5px;
 }
@@ -139,19 +148,21 @@ export default {
   flex: 1;
   padding: 12px;
   border: 1px solid #a3c6b3;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 16px;
   background-color: #ffffff;
   color: #333;
 }
 
 button {
-  background-color: #52b788;
-  color: #fff;
+  background-color: var(--clr-btn);
+  color: var(--main-card-bg-clr);
   border: none;
   padding: 15px;
-  border-radius: 10px;
-  font-size: 18px;
+  height: 2.75rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
   width: 10rem;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -167,7 +178,7 @@ button:hover:disabled {
 }
 
 button:hover:not(:disabled) {
-  background-color: #338f5d;
+  background-color: var(--clr-btn-hover);
 }
 
 @media (min-width: 768px) {

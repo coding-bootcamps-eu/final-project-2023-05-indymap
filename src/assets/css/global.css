@@ -8,10 +8,15 @@
   --main-color: #a3c6b3;
   --main-accent-color: #52b788;
   --clr-btn-alert: rgb(228, 53, 0);
+  --clr-btn-alert-hover: rgb(197, 49, 3);
   --clr-btn-alert-minor: #d85910;
-  --clr-btn: rgb(54, 54, 54);
-  --clr-btn-hover: rgb(187, 187, 187);
-  --clr-btn-active: rgb(0, 0, 0);
+  --clr-btn-alert-minor-hover: rgb(197, 46, 0);
+  --clr-btn: #338f5d;
+  --clr-btn-on-header: #1a442d;
+  --clr-btn-old: rgb(54, 54, 54);
+  --clr-btn-hover: #276945;
+  --clr-btn-hover-old: rgb(187, 187, 187);
+  --clr-btn-active: #355242;
   --clr-background: white;
   --clr-text: rgb(24, 24, 24);
   --clr-text-header: rgb(247, 247, 247);
@@ -31,6 +36,10 @@
 ::before,
 ::after {
   box-sizing: border-box;
+}
+::selection {
+  background-color: var(--header-bg-color);
+  color: var(--clr-text-header);
 }
 
 html,

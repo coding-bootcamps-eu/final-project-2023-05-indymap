@@ -6,7 +6,7 @@
         Please, tell us your name to get started.
       </p>
       <form>
-        <label for="username">Username</label
+        <label for="username" class="label-username">Username</label
         ><input
           type="text"
           v-model.trim="userName"
@@ -172,16 +172,16 @@ h1 {
 
 .submit-button {
   font-size: 1rem;
-  color: white;
-  font-weight: 700;
+  color: var(--main-card-bg-clr);
+  font-weight: 600;
   min-width: min-content;
-  height: 2.5rem;
+  width: 8rem;
+  height: 2.75rem;
   border-radius: 7px;
   border: 0;
   background-color: var(--clr-btn);
   text-align: center;
-
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 button:hover {
@@ -204,6 +204,7 @@ button:active {
   height: 100%;
 }
 .username-input {
+  margin-block: 0.5rem;
   border-radius: 5px;
   padding: 0.5rem;
 }
@@ -262,7 +263,13 @@ button:active {
   border-radius: 10px 0 0 10px;
   object-fit: contain;
 }
-
+.delete-icon {
+  width: 1rem;
+  transition: width 100ms ease;
+}
+.delete-icon:hover {
+  width: 1.25rem;
+}
 .delete-button {
   position: absolute;
   border: none;
@@ -270,6 +277,9 @@ button:active {
 
   bottom: 0.2rem;
   right: 0.2rem;
+}
+.delete-button:hover {
+  background-color: transparent;
 }
 
 .add-new-map-button {
@@ -279,16 +289,26 @@ button:active {
   bottom: 1rem;
   right: 1rem;
   z-index: 10;
+  border-radius: 90%;
+}
+.add-new-map-button:hover {
+  background: transparent;
 }
 
 .add-new-map-icon {
   width: 48px;
   height: 48px;
+  background-color: transparent;
+  border-radius: 90%;
+  transition: background-color 100ms ease;
 }
 
+.add-new-map-icon:hover {
+  background-color: var(--header-bg-color);
+}
 .delete-map-modal {
-  border: 2px solid black;
-  padding: 1.5rem;
+  box-shadow: var(--clr-text) 0 0 5px 0px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -297,15 +317,16 @@ button:active {
   margin-inline: auto;
   left: 3rem;
   right: 3rem;
-  top: 200px;
   text-align: center;
-
-  background: white;
+  top: 30%;
+  background: var(--main-card-bg-clr);
   border-radius: 0.5rem;
   opacity: 100%;
   transition: opacity 1s;
 }
-
+.modal-text {
+  font-weight: 600;
+}
 .btn-close-deletion-modal {
   border-radius: 90%;
   width: 1.8rem;
@@ -319,14 +340,16 @@ button:active {
   gap: 1rem;
   width: 100%;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
 }
 .btn-confirm-delete {
   background-color: var(--clr-btn-alert);
 }
-
+.btn-delete-pin:hover {
+  background-color: var(--clr-btn-alert-minor-hover);
+}
 .btn-deny-delete {
-  background-color: rgb(148, 148, 148);
+  background-color: var(--clr-btn);
 }
 
 .btn-confirm-delete,
@@ -334,8 +357,8 @@ button:active {
   font-size: 1rem;
   color: white;
   font-weight: 700;
-  width: 100%;
-  height: 2.5rem;
+  width: 8rem;
+  height: 3rem;
   border-radius: 7px;
   border: 0;
 
@@ -346,6 +369,10 @@ button:active {
 .btn-deny-delete:hover {
   background-color: var(--clr-btn-hover);
   transition: 150ms;
+}
+
+.btn-confirm-delete:hover {
+  background-color: var(--clr-btn-alert-hover);
 }
 
 .btn-confirm-delete:active,

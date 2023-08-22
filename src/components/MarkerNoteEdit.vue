@@ -22,15 +22,12 @@
         ></textarea>
       </article>
       <div class="btn-wrapper">
-        <button
-          @click="saveMarkerData(), $emit('pin-saved')"
-          class="btn-save-pin"
-        >
-          Save Marker
-        </button>
         <router-link class="router-link router-link-back-to-map" to="/map">
           <button class="btn-back-to-map">Back to map</button></router-link
         >
+        <button @click="saveMarkerData()" class="btn-save-pin">
+          Save Marker
+        </button>
       </div>
     </div>
   </section>
@@ -105,11 +102,6 @@ export default {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  --clr-btn: rgb(54, 54, 54);
-  --clr-btn-hover: rgb(187, 187, 187);
-  --clr-btn-active: rgb(0, 0, 0);
-  --clr-background: white;
-  --clr-text: black;
 }
 html {
   background-color: var(--clr-background);
@@ -180,7 +172,7 @@ button {
   color: white;
   font-weight: 700;
   width: 8rem;
-  height: 2.5rem;
+  height: 3rem;
   border-radius: 7px;
   border: 0;
   background-color: var(--clr-btn);
@@ -194,5 +186,8 @@ button:hover {
 
 button:active {
   background-color: var(--clr-btn-active);
+}
+.btn-back-to-map {
+  background-color: var(--clr-btn-on-header);
 }
 </style>

@@ -105,6 +105,7 @@ export default {
   data() {
     return {
       map: null,
+      currentLocation: null,
       notePopupContent: null,
       filteredNotes: [],
       filterValue: null,
@@ -132,7 +133,7 @@ export default {
   },
   methods: {
     /* Fetches the user's geolocation from the browers if they grant permission*/
-    /* fetchLocation() {
+    fetchLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -148,7 +149,7 @@ export default {
       } else {
         console.error("Geolocation is not supported by this browser.");
       }
-    }, */
+    },
 
     /* Creates a leaflet map instance and renders it in div#map */
     renderMap() {
@@ -275,7 +276,7 @@ export default {
     },
   },
   created() {
-    /* this.fetchLocation(); */
+    this.fetchLocation();
   },
   mounted() {
     this.renderMap();
@@ -468,11 +469,10 @@ p {
 .details {
   border-radius: 10px;
   border: none;
-  background-color: var(--main-accent-color);
+  background-color: var(--clr-btn);
   color: snow;
   height: 1.5rem;
   width: 70%;
-
   padding-inline: 0.5rem;
   margin-top: 0.5rem;
 }

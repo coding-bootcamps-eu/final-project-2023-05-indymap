@@ -166,6 +166,10 @@ html {
 .btn-delete-pin {
   background-color: var(--clr-btn-alert-minor);
 }
+.btn-delete-pin:hover {
+  background-color: var(--clr-btn-alert-minor-hover);
+}
+
 .delete-pin-modal {
   box-shadow: var(--clr-text) 0 0 5px 0px;
   padding: 2rem;
@@ -184,7 +188,10 @@ html {
   opacity: 100%;
   transition: opacity 1s;
 }
-
+.modal-text {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
 .btn-close-deletion-modal {
   border-radius: 90%;
   width: 1.8rem;
@@ -202,13 +209,15 @@ html {
 .btn-confirm-delete {
   background-color: var(--clr-btn-alert);
 }
-
+.btn-confirm-delete:hover {
+  background-color: var(--clr-btn-alert-hover);
+}
 button {
   font-size: 1rem;
   color: var(--clr-background);
   font-weight: 700;
   width: 7rem;
-  height: 2.5rem;
+  height: 3rem;
   border-radius: 7px;
   border: 0;
   background-color: var(--clr-btn);
