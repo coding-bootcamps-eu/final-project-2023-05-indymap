@@ -14,16 +14,8 @@ export default {
     };
   },
   async created() {
-    await this.dataStore.checkUser;
-    this.setUserId();
-  },
-
-  methods: {
-    setUserId() {
-      if (this.dataStore.userId) {
-        this.dataStore.fetchUserMaps(this.dataStore.userId);
-      }
-    },
+    this.dataStore.checkUser();
+    await this.dataStore.fetchUserMaps(this.dataStore.userId);
   },
 };
 </script>

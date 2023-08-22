@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="search__wrapper">
-      <div class="search__input__wrapper" v-if="notes">
+      <div class="search__input__wrapper" v-if="notes.length">
         <div class="search__icon">
           <img
             :src="require('@/assets/icons/search-icon.svg')"
@@ -12,8 +12,11 @@
           class="search__input"
           type="text"
           v-model="filterValue"
-          placeholder="Search for Marker"
+          placeholder="Filter your Pins"
         />
+      </div>
+      <div class="search__input__wrapper" v-else-if="!notes.length">
+        <p>Create your first marker!</p>
       </div>
       <div class="search__input__wrapper" v-else>
         <div class="lds-ring">
@@ -24,6 +27,9 @@
         </div>
         <p>Loading Data...</p>
       </div>
+      <button class="reset-map-view" @click="resetMapView">
+        To Startlocation
+      </button>
     </div>
     <div id="map" @click="closeNotePopup"></div>
     <div v-if="notePopupContent" class="note__popup__container">
@@ -68,7 +74,7 @@
         {{ contextMenuPosition.lng.toFixed(4) }}
       </p>
       <button class="add__marker" @click="$router.push('/edit-pin')">
-        Add Marker
+        Add New Pin
       </button>
     </div>
   </div>
@@ -78,14 +84,21 @@
 import "../../node_modules/leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useDataStore } from "@/stores/useDataStore";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
+    const route = useRoute();
     const dataStore = useDataStore();
-    dataStore.fetchMapPins(dataStore.currentMapId);
+
+    const mapId = route.params.id;
+    dataStore.currentMapId = mapId;
+
+    dataStore.fetchMapPins(mapId);
 
     return {
       dataStore,
+      mapId,
     };
   },
   name: "MapComponent",
@@ -105,6 +118,17 @@ export default {
     notes() {
       let pinData = this.dataStore.statePins.pins;
       return pinData;
+    },
+    mapRenderLocation() {
+      let mapData = this.dataStore.stateMaps.maps;
+      let locationData = mapData.filter(
+        (map) => map.id === this.dataStore.currentMapId
+      );
+      console.log(locationData);
+
+      return locationData.length
+        ? locationData[0].mapViewLocation
+        : { lat: 0, lng: 0 };
     },
   },
   methods: {
@@ -131,7 +155,10 @@ export default {
     renderMap() {
       this.map = L.map("map", { zoomControl: false });
 
-      this.map.setView([51.3127114, 9.4797461], 10);
+      this.map.setView(
+        [this.mapRenderLocation.lat, this.mapRenderLocation.lng],
+        10
+      );
 
       if (localStorage.getItem("darkMode") === "enabled") {
         L.tileLayer(
@@ -182,7 +209,17 @@ export default {
       });
     },
 
-    /* Opens a popup of the pin note with a littel preview of the note contents*/
+    resetMapView() {
+      this.map.setView(
+        [
+          this.dataStore.statePins.mapViewLocation.lat,
+          this.dataStore.statePins.mapViewLocation.lng,
+        ],
+        10
+      );
+    },
+
+    /* Opens a popup of the pin note with a little preview of the note contents*/
     showNotePopup(e) {
       e.originalEvent.preventDefault();
       for (let i = 0; i < this.notes.length; i++) {
@@ -245,8 +282,8 @@ export default {
     this.renderMap();
   },
   watch: {
-    currentLocation(newLocation) {
-      this.map.setView([newLocation.lat, newLocation.lng], 13);
+    mapRenderLocation(newLocation) {
+      this.map.setView([newLocation.lat, newLocation.lng], 10);
     },
     notes(newNotes) {
       if (newNotes) {
@@ -257,6 +294,16 @@ export default {
     filterValue() {
       this.filterNotes();
       this.addMarker();
+    },
+    "$route.params.id": {
+      async handler() {
+        this.dataStore.currentMapId = this.$route.params.id;
+        await this.dataStore.fetchMapPins(this.$route.params.id);
+        this.map.setView([
+          this.dataStore.statePins.mapViewLocation.lat,
+          this.dataStore.statePins.mapViewLocation.lng,
+        ]);
+      },
     },
   },
 };
@@ -300,7 +347,9 @@ p {
 .search__wrapper {
   position: absolute;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 
   top: 1rem;
   width: 100%;
@@ -335,6 +384,16 @@ p {
   width: 100%;
   border: transparent;
   background-color: snow;
+}
+
+.reset-map-view {
+  background: snow;
+  border: 1px solid grey;
+  border-radius: 50px;
+
+  padding-inline: 0.5rem;
+
+  height: 2rem;
 }
 
 .wrapper {

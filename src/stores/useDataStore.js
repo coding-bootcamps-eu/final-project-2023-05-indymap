@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useDataStore = defineStore("state", {
   state() {
     return {
-      stateMaps: {},
+      stateMaps: { maps: [] },
       statePins: {},
       currentMapId: "",
       currentPinId: "",
@@ -13,17 +13,17 @@ export const useDataStore = defineStore("state", {
       userId: "",
     };
   },
-  getters: {
+
+  actions: {
     checkUser() {
       if (localStorage.getItem("userID")) {
         this.userId = JSON.parse(localStorage.getItem("userID"));
-        return (this.existingUser = true);
+        this.existingUser = true;
       } else {
-        return (this.existingUser = false);
+        this.existingUser = false;
       }
     },
-  },
-  actions: {
+
     /* Gets Map Data for one User */
     fetchUserMaps(userID) {
       return fetch(`${process.env.VUE_APP_API_URL}/users/${userID}?_embed=maps`)

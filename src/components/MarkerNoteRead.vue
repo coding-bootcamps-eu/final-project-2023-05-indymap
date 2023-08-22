@@ -1,11 +1,11 @@
 <template>
   <section class="marker-container">
-    <router-link class="router-link router-link-map-view" to="/map">
-      <img
-        class="icon-left"
-        :src="require('@/assets/icons/arrow-left-circle.svg')"
-        alt="arrow pointing left"
-    /></router-link>
+    <img
+      class="icon-left"
+      :src="require('@/assets/icons/arrow-left-circle.svg')"
+      alt="arrow pointing left"
+      @click="backToMap"
+    />
     <div class="note-content-wrapper">
       <h2 class="marker-headline">
         {{ this.header }}
@@ -80,7 +80,17 @@ export default {
     async deletePinMethod() {
       await this.dataStore.deletePin(this.currentPinId);
       this.dataStore.currentPin = "";
-      this.$router.push("/map");
+      this.$router.push({
+        name: "map",
+        params: { id: this.dataStore.currentMapId },
+      });
+    },
+
+    backToMap() {
+      this.$router.push({
+        name: "map",
+        params: { id: this.dataStore.currentMapId },
+      });
     },
   },
 };
