@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="search__wrapper">
-      <div class="search__input__wrapper" v-if="markers.length">
+      <div class="search__input__wrapper" v-if="notes">
         <div class="search__icon">
           <img
             :src="require('@/assets/icons/search-icon.svg')"
@@ -14,9 +14,6 @@
           v-model="filterValue"
           placeholder="Search for Marker"
         />
-      </div>
-      <div class="search__input__wrapper" v-else-if="!markers.lenght">
-        <p>Create your first marker!</p>
       </div>
       <div class="search__input__wrapper" v-else>
         <div class="lds-ring">
@@ -95,6 +92,7 @@ export default {
   data() {
     return {
       map: null,
+      currentLocation: null,
       notePopupContent: null,
       filteredNotes: [],
       filterValue: null,
@@ -108,18 +106,10 @@ export default {
       let pinData = this.dataStore.statePins.pins;
       return pinData;
     },
-    currentMapLocation() {
-      let mapData = this.dataStore.stateMaps.maps;
-      let locationData = mapData.filter(
-        (map) => map.id === this.dataStore.currentMapId
-      );
-
-      return locationData[0].mapViewLocation;
-    },
   },
   methods: {
     /* Fetches the user's geolocation from the browers if they grant permission*/
-    /* fetchLocation() {
+    fetchLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -135,16 +125,13 @@ export default {
       } else {
         console.error("Geolocation is not supported by this browser.");
       }
-    }, */
+    },
 
     /* Creates a leaflet map instance and renders it in div#map */
     renderMap() {
       this.map = L.map("map", { zoomControl: false });
 
-      this.map.setView(
-        [this.currentMapLocation.lat, this.currentMapLocation.lng],
-        10
-      );
+      this.map.setView([51.3127114, 9.4797461], 10);
 
       if (localStorage.getItem("darkMode") === "enabled") {
         L.tileLayer(
@@ -252,15 +239,15 @@ export default {
     },
   },
   created() {
-    /* this.fetchLocation(); */
+    this.fetchLocation();
   },
   mounted() {
     this.renderMap();
   },
   watch: {
-    /*     currentLocation(newLocation) {
+    currentLocation(newLocation) {
       this.map.setView([newLocation.lat, newLocation.lng], 13);
-    }, */
+    },
     notes(newNotes) {
       if (newNotes) {
         this.filterNotes();
@@ -423,11 +410,10 @@ p {
 .details {
   border-radius: 10px;
   border: none;
-  background-color: var(--main-accent-color);
+  background-color: var(--clr-btn);
   color: snow;
   height: 1.5rem;
   width: 70%;
-
   padding-inline: 0.5rem;
   margin-top: 0.5rem;
 }
@@ -488,9 +474,5 @@ p {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.back-to-home {
-  background-color: var(--clr-text);
 }
 </style>
