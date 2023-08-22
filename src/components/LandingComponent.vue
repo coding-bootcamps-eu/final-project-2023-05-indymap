@@ -300,8 +300,8 @@ button:active {
   background-color: var(--header-bg-color);
 }
 .delete-map-modal {
-  border: 2px solid black;
-  padding: 1.5rem;
+  box-shadow: var(--clr-text) 0 0 5px 0px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -310,15 +310,16 @@ button:active {
   margin-inline: auto;
   left: 3rem;
   right: 3rem;
-  top: 200px;
   text-align: center;
-
-  background: white;
+  top: 30%;
+  background: var(--main-card-bg-clr);
   border-radius: 0.5rem;
   opacity: 100%;
   transition: opacity 1s;
 }
-
+.modal-text {
+  font-weight: 600;
+}
 .btn-close-deletion-modal {
   border-radius: 90%;
   width: 1.8rem;
@@ -332,14 +333,16 @@ button:active {
   gap: 1rem;
   width: 100%;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
 }
 .btn-confirm-delete {
   background-color: var(--clr-btn-alert);
 }
-
+.btn-delete-pin:hover {
+  background-color: var(--clr-btn-alert-minor-hover);
+}
 .btn-deny-delete {
-  background-color: rgb(148, 148, 148);
+  background-color: var(--clr-btn);
 }
 
 .btn-confirm-delete,
@@ -347,8 +350,8 @@ button:active {
   font-size: 1rem;
   color: white;
   font-weight: 700;
-  width: 100%;
-  height: 2.5rem;
+  width: 8rem;
+  height: 3rem;
   border-radius: 7px;
   border: 0;
 
@@ -359,6 +362,10 @@ button:active {
 .btn-deny-delete:hover {
   background-color: var(--clr-btn-hover);
   transition: 150ms;
+}
+
+.btn-confirm-delete:hover {
+  background-color: var(--clr-btn-alert-hover);
 }
 
 .btn-confirm-delete:active,

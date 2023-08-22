@@ -8,7 +8,9 @@
   --main-color: #a3c6b3;
   --main-accent-color: #52b788;
   --clr-btn-alert: rgb(228, 53, 0);
+  --clr-btn-alert-hover: rgb(197, 49, 3);
   --clr-btn-alert-minor: #d85910;
+  --clr-btn-alert-minor-hover: rgb(197, 46, 0);
   --clr-btn: #338f5d;
   --clr-btn-on-header: #1a442d;
   --clr-btn-old: rgb(54, 54, 54);
