@@ -19,7 +19,11 @@
             Username must be min. 5 characters long
           </p></small
         >
-        <button class="submit-button" @click.prevent="newUserLink">
+        <button
+          class="submit-button"
+          @click.prevent="newUserLink"
+          :disabled="inputValidation === false"
+        >
           Submit
         </button>
       </form>
@@ -111,7 +115,10 @@ export default {
 
     navigateToMap(mapId) {
       this.dataStore.currentMapId = mapId;
-      this.$router.push("/map");
+      this.$router.push({
+        name: "map",
+        params: { id: mapId },
+      });
     },
 
     async deleteMap(mapId) {

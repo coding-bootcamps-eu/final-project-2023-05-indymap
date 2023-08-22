@@ -75,7 +75,12 @@ export default {
         this.dataStore.userId
       );
       await this.dataStore.fetchUserMaps(this.dataStore.userId);
-      this.$router.push("/map");
+      if (this.dataStore.currentMapId) {
+        this.$router.push({
+          name: "map",
+          params: { id: this.dataStore.currentMapId },
+        });
+      }
     },
 
     returnCoordinates() {

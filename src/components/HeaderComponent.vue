@@ -39,8 +39,13 @@ export default {
   },
   methods: {
     loadDifferentMap(mapId) {
-      this.dataStore.currentMapId = mapId;
-      this.dataStore.fetchMapPins(mapId);
+      this.$router.push({
+        name: "map",
+        params: { id: mapId },
+      });
+      /* location.reload(); */
+      /* this.dataStore.currentMapId = mapId;
+      this.dataStore.fetchMapPins(mapId); */
     },
   },
 };
