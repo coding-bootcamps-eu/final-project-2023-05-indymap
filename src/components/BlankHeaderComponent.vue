@@ -36,6 +36,7 @@ header {
 
 .title {
   margin: 0;
+  color: var(--clr-text-header);
 }
 
 .burger-wrapper {
