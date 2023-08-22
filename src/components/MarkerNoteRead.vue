@@ -118,16 +118,16 @@ html {
   align-items: center;
   background-color: var(--main-card-bg-clr);
 }
-.router-link-map-view {
-  position: absolute;
-  align-self: flex-start;
-}
+
 .icon-left {
   width: 2rem;
   background-color: none;
   border-radius: 90%;
   transition: 150ms;
+  position: absolute;
+  align-self: flex-start;
 }
+
 .icon-left:hover {
   box-shadow: var(--clr-text) 0 0 2px;
   background-color: var(--header-bg-color);
@@ -204,7 +204,7 @@ html {
   display: flex;
   gap: 1rem;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
 }
 .btn-confirm-delete {
   background-color: var(--clr-btn-alert);
