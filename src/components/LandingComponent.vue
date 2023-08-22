@@ -6,7 +6,7 @@
         Please, tell us your name to get started.
       </p>
       <form>
-        <label for="username">Username</label
+        <label for="username" class="label-username">Username</label
         ><input
           type="text"
           v-model.trim="userName"
@@ -165,16 +165,16 @@ h1 {
 
 .submit-button {
   font-size: 1rem;
-  color: white;
-  font-weight: 700;
+  color: var(--main-card-bg-clr);
+  font-weight: 600;
   min-width: min-content;
-  height: 2.5rem;
+  width: 8rem;
+  height: 2.75rem;
   border-radius: 7px;
   border: 0;
   background-color: var(--clr-btn);
   text-align: center;
-
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 button:hover {
@@ -197,6 +197,7 @@ button:active {
   height: 100%;
 }
 .username-input {
+  margin-block: 0.5rem;
   border-radius: 5px;
   padding: 0.5rem;
 }
@@ -292,6 +293,7 @@ button:active {
   height: 48px;
   background-color: transparent;
   border-radius: 90%;
+  transition: background-color 100ms ease;
 }
 
 .add-new-map-icon:hover {

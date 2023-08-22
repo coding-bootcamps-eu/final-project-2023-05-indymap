@@ -157,13 +157,15 @@ header {
   color: white;
   font-weight: 700;
   width: 80%;
-  height: 2.5rem;
+  height: 3.25rem;
   border-radius: 7px;
   border: none;
-  background-color: var(--clr-btn);
+  background-color: var(--clr-btn-on-header);
   text-align: center;
-
   margin-block: 1rem;
   margin-inline: auto;
+}
+.back-to-home:hover {
+  background-color: var(--clr-btn-hover);
 }
 </style>
