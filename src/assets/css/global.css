@@ -37,6 +37,10 @@
 ::after {
   box-sizing: border-box;
 }
+::selection {
+  background-color: var(--header-bg-color);
+  color: var(--clr-text-header);
+}
 
 html,
 body {
