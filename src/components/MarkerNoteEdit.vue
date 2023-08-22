@@ -114,7 +114,7 @@ html {
   color: var(--clr-text);
 }
 .marker-edit-container {
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 0;
   display: flex;
   gap: 1.5rem;
   flex-direction: column;
@@ -136,13 +136,14 @@ label {
 }
 input,
 textarea {
+  border-radius: 5px;
   font-size: 1rem;
 }
 #marker-name {
   padding: 0.5rem;
 }
 #marker-description {
-  height: 5rem;
+  height: 10rem;
   width: 100%;
   padding: 0.5rem;
 }

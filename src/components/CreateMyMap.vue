@@ -97,14 +97,16 @@ export default {
 
 <style scoped>
 .container {
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
-  background-color: #c4edd6;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  background-color: var(--main-bg-color);
+  padding: 1rem;
+  /* border-radius: 20px; */
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
 
+  min-width: 350px;
+  max-width: 800px;
   height: 100%;
 }
 

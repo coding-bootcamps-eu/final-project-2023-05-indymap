@@ -1,15 +1,24 @@
 :root {
-  --main-bg-color: snow;
+  --main-bg-color: #c4edd6;
+  --header-bg-color: #63da96;
+  --main-card-bg-clr: rgb(252, 251, 247);
+  --main-card-bg-clr-hover: #d98757;
   --main-color: #a3c6b3;
   --main-accent-color: #52b788;
-  --clr-btn-alert: rgb(252, 59, 0);
-  --clr-btn-alert-minor: rgb(248, 120, 81);
+  --clr-btn-alert: rgb(228, 53, 0);
+  --clr-btn-alert-minor: #c0591e;
   --clr-btn: rgb(54, 54, 54);
   --clr-btn-hover: rgb(187, 187, 187);
   --clr-btn-active: rgb(0, 0, 0);
   --clr-background: white;
-  --clr-text: black;
+  --clr-text: rgb(24, 24, 24);
   --clr-icon-back-to-map: rgb(226, 255, 226);
+
+  --clr-green-base: #99d4b2;
+  --clr-green-darker: #548769;
+  --clr-green-warmer: #ccd6a7;
+  --clr-orange-contrast: #fabd35;
+  --clr-blue-contrast: #74a8d6;
 }
 
 *,
@@ -23,10 +32,11 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  color: var(--clr-text);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
   background-color: var(--main-bg-color);
 }
 

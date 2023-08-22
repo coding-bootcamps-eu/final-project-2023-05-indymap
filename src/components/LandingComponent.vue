@@ -1,20 +1,26 @@
 <template>
   <main class="landing-page">
-    <div v-if="dataStore.existingUser === false" class="new-user-introduction">
-      <p>
+    <div v-if="dataStore.existingUser === false" class="wrapper">
+      <p class="welcome-msg-new-user">
         Welcome to Indymap new user. Please tell us your name so that we know
         who you are in the future.
       </p>
       <form>
         <label for="username">Username</label
-        ><input type="text" v-model="userName" name="username" />
+        ><input
+          type="text"
+          v-model="userName"
+          name="username"
+          class="username-input"
+        />
         <button @click.prevent="newUserLink">Submit</button>
       </form>
     </div>
     <div class="wrapper" v-else>
       <h1 class="welcome-message">
-        Welcome back {{ dataStore.stateMaps.name }}, select your map to get
-        started:
+        <span>Welcome back</span
+        ><span class="text-username">{{ dataStore.stateMaps.name }}.</span>
+        <span>Select your map to get started:</span>
       </h1>
       <div class="card-container">
         <div
@@ -25,7 +31,7 @@
         >
           <img
             class="map-image"
-            src="https://picsum.photos/seed/picsum/200/300"
+            src="https://picsum.photos/seed/picsum/250/300"
             alt="map"
           />
           <div class="heading-and-description">
@@ -41,6 +47,7 @@
               <img
                 :src="require('@/assets/icons/delete-icon.svg')"
                 alt="delete"
+                class="delete-icon"
               />
             </button>
           </div>
@@ -118,6 +125,7 @@ html {
 }
 main {
   margin: 0;
+  background-color: var(--main-bg-color);
 }
 
 form {
@@ -126,52 +134,92 @@ form {
   align-items: center;
 }
 
+h1 {
+  font-weight: 500;
+}
 h2 {
   font-size: 1rem;
+}
+
+button {
+  font-size: 1rem;
+  color: white;
+  font-weight: 700;
+  min-width: min-content;
+  height: 2.5rem;
+  border-radius: 7px;
+  border: 0;
+  background-color: var(--clr-btn);
+  text-align: center;
+}
+
+button:hover {
+  background-color: var(--clr-btn-hover);
+  transition: 150ms;
+}
+
+button:active {
+  background-color: var(--clr-btn-active);
 }
 
 .landing-page {
   height: 100%;
 }
-.wrapper {
+.wrapper,
+.new-user-introduction {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
 }
+.username-input {
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
 
-.welcome-message {
+.welcome-message,
+.welcome-msg-new-user {
+  font-weight: 500;
   font-size: 1.5rem;
   padding: 1rem;
   text-align: center;
   margin-bottom: 2rem;
-  margin-top: 0;
-
-  background: lightblue;
+  margin-top: 1rem;
+  background: var(--main-bg-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 80%;
 }
-
+.text-username {
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
 .card-container {
   display: flex;
   flex-direction: column;
-
   gap: 1rem;
-
   width: 80%;
   height: 100%;
-
   background-color: var(--main-bg-color);
 }
 
 .flavor-text-map {
   position: relative;
   display: flex;
-  max-height: 15%;
-
+  height: 10rem;
+  max-height: 18%;
   border-radius: 10px;
-  background-color: snow;
-  color: black;
-
+  background-color: var(--main-card-bg-clr);
   box-shadow: 0px 0px 5px 2px hsla(0, 0%, 50%, 0.3);
+  transition: background-color 100ms ease;
+}
+
+.flavor-text-map:hover {
+  background-color: var(--main-card-bg-clr-hover);
+  box-shadow: 0px 0px 10px 2px hsla(0, 0%, 50%, 0.575);
 }
 
 .heading-and-description {
@@ -191,7 +239,7 @@ h2 {
   background: transparent;
 
   bottom: 1rem;
-  right: 1rem;
+  right: 0rem;
 }
 
 .add-new-map-button {
