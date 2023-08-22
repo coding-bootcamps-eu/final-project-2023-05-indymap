@@ -255,7 +255,13 @@ button:active {
   border-radius: 10px 0 0 10px;
   object-fit: contain;
 }
-
+.delete-icon {
+  width: 1rem;
+  transition: width 100ms ease;
+}
+.delete-icon:hover {
+  width: 1.25rem;
+}
 .delete-button {
   position: absolute;
   border: none;
@@ -263,6 +269,9 @@ button:active {
 
   bottom: 0.2rem;
   right: 0.2rem;
+}
+.delete-button:hover {
+  background-color: transparent;
 }
 
 .add-new-map-button {
@@ -272,13 +281,22 @@ button:active {
   bottom: 1rem;
   right: 1rem;
   z-index: 10;
+  border-radius: 90%;
+}
+.add-new-map-button:hover {
+  background: transparent;
 }
 
 .add-new-map-icon {
   width: 48px;
   height: 48px;
+  background-color: transparent;
+  border-radius: 90%;
 }
 
+.add-new-map-icon:hover {
+  background-color: var(--header-bg-color);
+}
 .delete-map-modal {
   border: 2px solid black;
   padding: 1.5rem;
