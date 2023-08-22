@@ -121,6 +121,7 @@ header {
   transform: translateX(50vmin);
   top: 0;
   transition: 0.5s;
+  background-color: var(--header-sidebar-bg-color);
 }
 #burgerMenu {
   display: none;
@@ -167,6 +168,7 @@ header {
 .nav__title {
   font-size: 24px;
   padding-inline: 2rem;
+  padding-bottom: 0.8rem;
 }
 
 .map__list li {
