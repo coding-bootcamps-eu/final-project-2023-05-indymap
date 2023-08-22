@@ -103,7 +103,7 @@ header {
 
 #burger > div {
   height: 2px;
-  background-color: #000;
+  background-color: var(--clr-text-header);
   transition: 0.5s;
   z-index: 999;
 }
