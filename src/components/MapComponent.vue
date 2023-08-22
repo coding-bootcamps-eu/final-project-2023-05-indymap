@@ -34,13 +34,17 @@
           :alt="notePopupContent.description"
         />
         <div class="note__popup__content">
-          <h2>{{ notePopupContent.header }}</h2>
-          <p class="note__popup__text">
-            {{ notePopupContent.description.substring(0, 50) }}
-          </p>
-          <button class="details" @click="$router.push('/view-pin')">
-            Details
-          </button>
+          <div class="note__content_wrapper">
+            <h2 class="note__popup_title">{{ notePopupContent.header }}</h2>
+            <p class="note__popup__text">
+              {{ notePopupContent.description.substring(0, 50) }}
+            </p>
+          </div>
+          <div class="note__popup__button">
+            <button class="details" @click="$router.push('/view-pin')">
+              Details
+            </button>
+          </div>
         </div>
         <button class="note__popup__close__button" @click="closeNotePopup">
           <img
@@ -347,7 +351,7 @@ p {
   display: flex;
 
   width: 100%;
-  max-height: 20%;
+  max-height: 150px;
 
   background-color: transparent;
   bottom: 0;
@@ -376,9 +380,19 @@ p {
   object-fit: contain;
 }
 
+.note__popup_title {
+  font-size: 1rem;
+  padding-inline-end: 1rem;
+}
+
 .note__popup__content {
-  max-width: 60%;
-  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+
+  overflow: hidden;
 }
 
 .note__popup__text {
@@ -387,11 +401,19 @@ p {
   white-space: nowrap;
 }
 
+.note__popup__button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .details {
   border-radius: 10px;
   border: none;
-  background-color: #23a7b9;
+  background-color: var(--main-accent-color);
   color: snow;
+  height: 1.5rem;
+  width: 70%;
 
   padding-inline: 0.5rem;
   margin-top: 0.5rem;
