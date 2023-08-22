@@ -1,17 +1,20 @@
 :root {
   --main-bg-color: #c4edd6;
-  --header-bg-color: #63da96;
+  /* --header-bg-color: #63da96; */
+  --header-bg-color: #548769;
   --main-card-bg-clr: rgb(252, 251, 247);
+  --card-bg-accent-clr: rgb(238, 238, 238);
   --main-card-bg-clr-hover: #d98757;
   --main-color: #a3c6b3;
   --main-accent-color: #52b788;
   --clr-btn-alert: rgb(228, 53, 0);
-  --clr-btn-alert-minor: #c0591e;
+  --clr-btn-alert-minor: #d85910;
   --clr-btn: rgb(54, 54, 54);
   --clr-btn-hover: rgb(187, 187, 187);
   --clr-btn-active: rgb(0, 0, 0);
   --clr-background: white;
   --clr-text: rgb(24, 24, 24);
+  --clr-text-header: rgb(247, 247, 247);
   --clr-icon-back-to-map: rgb(226, 255, 226);
 
   --clr-green-base: #99d4b2;

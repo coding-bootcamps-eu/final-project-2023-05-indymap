@@ -1,35 +1,37 @@
 <template>
   <section class="marker-edit-container">
-    <article class="marker-edit-headline-input-container">
-      <label for="marker-name">Please give your Pin a name</label>
-      <input
-        type="text"
-        v-model.trim="header"
-        placeholder=" My favourite place"
-        id="marker-name"
-      />
-    </article>
-    <article class="marker-edit-text-input-container">
-      <label for="marker-description">Please decribe your Pin</label>
-      <textarea
-        name="marker-description-input"
-        v-model.trim="description"
-        placeholder=" What is special about this place?"
-        id="marker-description"
-        cols="10"
-        rows="5"
-      ></textarea>
-    </article>
-    <div class="btn-wrapper">
-      <button
-        @click="saveMarkerData(), $emit('pin-saved')"
-        class="btn-save-pin"
-      >
-        Save Marker
-      </button>
-      <router-link class="router-link router-link-back-to-map" to="/map">
-        <button class="btn-back-to-map">Back to map</button></router-link
-      >
+    <div class="pin-input-wrapper">
+      <article class="marker-edit-headline-input-container">
+        <label for="marker-name">Please give your Pin a name</label>
+        <input
+          type="text"
+          v-model.trim="header"
+          placeholder=" My favourite place"
+          id="marker-name"
+        />
+      </article>
+      <article class="marker-edit-text-input-container">
+        <label for="marker-description">Please decribe your Pin</label>
+        <textarea
+          name="marker-description-input"
+          v-model.trim="description"
+          placeholder=" What is special about this place?"
+          id="marker-description"
+          cols="10"
+          rows="5"
+        ></textarea>
+      </article>
+      <div class="btn-wrapper">
+        <button
+          @click="saveMarkerData(), $emit('pin-saved')"
+          class="btn-save-pin"
+        >
+          Save Marker
+        </button>
+        <router-link class="router-link router-link-back-to-map" to="/map">
+          <button class="btn-back-to-map">Back to map</button></router-link
+        >
+      </div>
     </div>
   </section>
 </template>
@@ -122,6 +124,17 @@ html {
   width: 80%;
   margin-inline: auto;
 }
+.pin-input-wrapper {
+  background-color: var(--main-card-bg-clr);
+  padding: 2rem;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  margin-inline: auto;
+}
 .marker-edit-headline-input-container,
 .marker-edit-text-input-container {
   display: flex;
@@ -138,6 +151,7 @@ input,
 textarea {
   border-radius: 5px;
   font-size: 1rem;
+  background-color: var(--card-bg-accent-clr);
 }
 #marker-name {
   padding: 0.5rem;
@@ -154,6 +168,7 @@ textarea {
   text-decoration: none;
 }
 .btn-wrapper {
+  margin-top: 0.75rem;
   display: flex;
   gap: 1rem;
   align-items: center;
