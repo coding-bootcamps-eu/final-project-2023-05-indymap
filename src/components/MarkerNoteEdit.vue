@@ -11,7 +11,7 @@
         />
       </article>
       <article class="marker-edit-text-input-container">
-        <label for="marker-description">Please decribe your Pin</label>
+        <label for="marker-description">Please describe your Pin</label>
         <textarea
           name="marker-description-input"
           v-model.trim="description"
@@ -22,12 +22,9 @@
         ></textarea>
       </article>
       <div class="btn-wrapper">
-        <router-link class="router-link router-link-back-to-map" to="/map">
-          <button class="btn-back-to-map">Back to map</button></router-link
-        >
-        <button @click="saveMarkerData()" class="btn-save-pin">
-          Save Marker
-        </button>
+        <button class="btn-back-to-map" @click="backToMap">Back to map</button>
+
+        <button @click="saveMarkerData()" class="btn-save-pin">Save Pin</button>
       </div>
     </div>
   </section>
@@ -92,6 +89,12 @@ export default {
       }
       await this.dataStore.fetchMapPins(this.dataStore.currentMapId);
       this.$router.push("/view-pin");
+    },
+    backToMap() {
+      this.$router.push({
+        name: "map",
+        params: { id: this.dataStore.currentMapId },
+      });
     },
   },
 };

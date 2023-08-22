@@ -17,7 +17,7 @@
   --clr-btn-hover: #276945;
   --clr-btn-hover-old: rgb(187, 187, 187);
   --clr-btn-active: #355242;
-  --clr-background: white;
+  --clr-background: rgb(255, 255, 255);
   --clr-text: rgb(24, 24, 24);
   --clr-text-header: rgb(247, 247, 247);
   --clr-icon-back-to-map: rgb(226, 255, 226);
@@ -48,7 +48,7 @@ body {
   flex-direction: column;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100vh;
   color: var(--clr-text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -60,5 +60,5 @@ body {
 #app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }

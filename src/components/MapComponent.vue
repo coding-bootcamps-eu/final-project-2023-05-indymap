@@ -121,7 +121,6 @@ export default {
       let locationData = mapData.filter(
         (map) => map.id === this.dataStore.currentMapId
       );
-      console.log(locationData);
 
       return locationData.length
         ? locationData[0].mapViewLocation
@@ -130,7 +129,7 @@ export default {
   },
   methods: {
     /* Fetches the user's geolocation from the browers if they grant permission*/
-    fetchLocation() {
+    /* fetchLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -146,7 +145,7 @@ export default {
       } else {
         console.error("Geolocation is not supported by this browser.");
       }
-    },
+    }, */
 
     /* Creates a leaflet map instance and renders it in div#map */
     renderMap() {
@@ -273,7 +272,7 @@ export default {
     },
   },
   created() {
-    this.fetchLocation();
+    /* this.fetchLocation(); */
   },
   mounted() {
     this.renderMap();
@@ -310,6 +309,10 @@ export default {
 h2,
 p {
   margin: 0;
+}
+
+#map {
+  height: calc(100vh - 5rem);
 }
 
 .context__menu {
@@ -395,10 +398,6 @@ p {
 
 .wrapper {
   position: relative;
-  height: 100%;
-}
-
-#map {
   height: 100%;
 }
 
