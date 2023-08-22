@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="search__wrapper">
-      <div class="search__input__wrapper" v-if="notes.length">
+      <div class="search__input__wrapper" v-if="notes">
         <div class="search__icon">
           <img
             :src="require('@/assets/icons/search-icon.svg')"
@@ -14,9 +14,6 @@
           v-model="filterValue"
           placeholder="Filter your Pins"
         />
-      </div>
-      <div class="search__input__wrapper" v-else-if="!notes.length">
-        <p>Create your first marker!</p>
       </div>
       <div class="search__input__wrapper" v-else>
         <div class="lds-ring">
